@@ -1,0 +1,113 @@
+[gd_scene load_steps=12 format=3 uid="uid://di86t48oqn1vh"]
+
+[ext_resource type="Texture2D" uid="uid://dkuuvsat605gd" path="res://icon.svg" id="1_ir8hq"]
+[ext_resource type="Script" path="res://scripts/star.gd" id="1_s3bkw"]
+[ext_resource type="Resource" uid="uid://dy1rnmmncijea" path="res://reactions/p_d.tres" id="2_0vef3"]
+[ext_resource type="Resource" uid="uid://idkk4jrkpfbv" path="res://reactions/d_He.tres" id="3_rqwef"]
+[ext_resource type="Resource" uid="uid://bi14y0mwbbe8k" path="res://reactions/He_C.tres" id="4_fj361"]
+[ext_resource type="Resource" uid="uid://bmh41rvvbh5dj" path="res://reactions/He_N.tres" id="5_ikn2y"]
+[ext_resource type="Resource" uid="uid://blvkywkwy372k" path="res://reactions/He_O.tres" id="6_4s5as"]
+[ext_resource type="Resource" uid="uid://fslefthc0eqw" path="res://reactions/N_Fe.tres" id="7_q78gj"]
+[ext_resource type="Script" path="res://scripts/planet.gd" id="9_d0ugd"]
+
+[sub_resource type="Curve" id="Curve_wwjd4"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.99061, 0.00533807), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_e3r27"]
+polygon = PackedVector2Array(-44, -38, 0, -59, 47, -41, 61, 7, 40, 46, 0, 57, -44, 43, -58, 0)
+
+[node name="Space" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/PanelContainer/MarginContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "Mass:"
+
+[node name="MassLabel" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="Label3" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "Temperature:"
+
+[node name="TemperatureLabel" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -120.0
+offset_bottom = 50.0
+grow_horizontal = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer2/HBoxContainer"]
+layout_mode = 2
+text = "Current Isotope"
+
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer/PanelContainer2/HBoxContainer"]
+layout_mode = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Star" type="Node2D" parent="." node_paths=PackedStringArray("mass_label", "temperature_label", "isotope_menu")]
+script = ExtResource("1_s3bkw")
+mass_to_temperature = 10.0
+mass_to_max_temperature = 10.0
+reactions_intensity = 0.01
+reactions = Array[Resource("res://scripts/reaction.gd")]([ExtResource("2_0vef3"), ExtResource("3_rqwef"), ExtResource("4_fj361"), ExtResource("5_ikn2y"), ExtResource("6_4s5as"), ExtResource("7_q78gj")])
+mass_label = NodePath("../CanvasLayer/PanelContainer/MarginContainer/GridContainer/MassLabel")
+temperature_label = NodePath("../CanvasLayer/PanelContainer/MarginContainer/GridContainer/TemperatureLabel")
+isotope_menu = NodePath("../CanvasLayer/PanelContainer2/HBoxContainer/OptionButton")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Star"]
+amount = 1
+emission_shape = 1
+emission_sphere_radius = 64.0
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 17.94
+initial_velocity_max = 179.37
+linear_accel_max = 4.48
+scale_amount_min = 18.94
+scale_amount_max = 23.42
+scale_amount_curve = SubResource("Curve_wwjd4")
+
+[node name="Sprite2D" type="Sprite2D" parent="Star"]
+texture = ExtResource("1_ir8hq")
+
+[node name="PointLight2D" type="PointLight2D" parent="Star"]
+shadow_enabled = true
+texture = ExtResource("1_ir8hq")
+
+[node name="Planet" type="Node2D" parent="Star"]
+script = ExtResource("9_d0ugd")
+
+[node name="Sprite2D" type="Sprite2D" parent="Star/Planet"]
+position = Vector2(300, 0)
+texture = ExtResource("1_ir8hq")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Star/Planet"]
+position = Vector2(300, 0)
+occluder = SubResource("OccluderPolygon2D_e3r27")
+
+[connection signal="item_selected" from="CanvasLayer/PanelContainer2/HBoxContainer/OptionButton" to="Star" method="change_isotope"]

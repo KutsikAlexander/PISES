@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Reaction" load_steps=2 format=3 uid="uid://bmh41rvvbh5dj"]
+
+[ext_resource type="Script" path="res://scripts/reaction.gd" id="1_xisb5"]
+
+[resource]
+script = ExtResource("1_xisb5")
+mass_threshold = 10000.0
+temperature_threshold = 1000.0
+consume_isotope = 3
+product_isotope = 6
+mass_defect = 0.5

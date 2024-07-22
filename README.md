@@ -52,7 +52,7 @@ Click to add more chemical elements to your star. More nucleons mean more mass. 
 
 - Alchemy interpretation
 
-Nuclear synthes is the process of combining two isotops into new one with emission of some energy. Almost all known elements in the universe heavier then H are product of stellar nucleosynthes.
+Nuclear synthes is the process of combining two isotopes into new one with emission of some energy. Almost all known elements in the universe heavier then H are product of stellar nucleosynthes.
 
 - Shadows interpretation
 
@@ -63,7 +63,7 @@ Star produce light which is opposite of shadow.
 - Add some chemical elements into your star via clicks
 - Big mass can ignite some nuclear reactions
 - Nuclear fusion produce energy/temperature
-- Nuclear fusion consume mass of some isotop and produce another (heavier) isotop
+- Nuclear fusion consume mass of some isotope and produce another (heavier) isotope
 - Each nuclear reaction has temperature threshold
 - Unlock new elements via nuclear reaction which produce this elements
 - Star has minimum temperature which is demand on its mass (bigger mass -> bigger minimum temperature) and elements in it. 
