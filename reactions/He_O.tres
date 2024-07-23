@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_japti")
 mass_threshold = 10000.0
-temperature_threshold = 1000.0
+temperature_threshold = 1200.0
 consume_isotope = 3
 product_isotope = 5
 mass_defect = 0.5
