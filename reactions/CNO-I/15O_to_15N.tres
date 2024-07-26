@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="Reaction" load_steps=7 format=3 uid="uid://b2lae5y8dspc6"]
+
+[ext_resource type="Resource" uid="uid://box0y7l6skye7" path="res://isotopes/15O.tres" id="1_2hrf0"]
+[ext_resource type="Script" path="res://scripts/reaction.gd" id="1_c5108"]
+[ext_resource type="Script" path="res://scripts/chanel.gd" id="2_oph0w"]
+[ext_resource type="Resource" uid="uid://damb17x2gm2bx" path="res://isotopes/15N.tres" id="3_xbj7x"]
+
+[sub_resource type="Resource" id="Resource_f3bks"]
+script = ExtResource("2_oph0w")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("1_2hrf0")])
+probability = 0.5
+
+[sub_resource type="Resource" id="Resource_1op5t"]
+script = ExtResource("2_oph0w")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("3_xbj7x")])
+probability = 1.0
+
+[resource]
+script = ExtResource("1_c5108")
+reaction_name = "15O decay"
+description = "15O decay"
+mass_threshold = 0.0
+temperature_threshold = 0.0
+input_chanel = SubResource("Resource_f3bks")
+output_chanel = SubResource("Resource_1op5t")
+mass_defect = 0.9
+energy_gain = 1.73

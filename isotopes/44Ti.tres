@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Isotope" load_steps=2 format=3 uid="uid://csqwomjscgh6b"]
+
+[ext_resource type="Script" path="res://scripts/isotope.gd" id="1_fp2ar"]
+
+[resource]
+script = ExtResource("1_fp2ar")
+A = 44
+Z = 22
+name = "44Ti"

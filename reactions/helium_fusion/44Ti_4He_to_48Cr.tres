@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Reaction" load_steps=8 format=3 uid="uid://c5oeqwqe83lsi"]
+
+[ext_resource type="Resource" uid="uid://csqwomjscgh6b" path="res://isotopes/44Ti.tres" id="1_47gwg"]
+[ext_resource type="Script" path="res://scripts/reaction.gd" id="1_prmdt"]
+[ext_resource type="Resource" uid="uid://b3jgflkgva4ha" path="res://isotopes/4He.tres" id="2_h2lxg"]
+[ext_resource type="Script" path="res://scripts/chanel.gd" id="3_wfg0b"]
+[ext_resource type="Resource" uid="uid://d3wuqy6gink7a" path="res://isotopes/48Cr.tres" id="4_cgp52"]
+
+[sub_resource type="Resource" id="Resource_cmu0n"]
+script = ExtResource("3_wfg0b")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("1_47gwg"), ExtResource("2_h2lxg")])
+probability = 1.0
+
+[sub_resource type="Resource" id="Resource_n14xk"]
+script = ExtResource("3_wfg0b")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("4_cgp52")])
+probability = 1.0
+
+[resource]
+script = ExtResource("1_prmdt")
+reaction_name = "44Ti+4He=48Cr"
+description = ""
+mass_threshold = 100000.0
+temperature_threshold = 1000.0
+input_chanel = SubResource("Resource_cmu0n")
+output_chanel = SubResource("Resource_n14xk")
+mass_defect = 0.9
+energy_gain = 7.7

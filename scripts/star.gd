@@ -3,8 +3,8 @@ class_name Star
 extends Node
 
 # general variables
-var masses: Array[float]
-var current_isotope: Reaction.ISOTOPE = Reaction.ISOTOPE.H
+var masses: Dictionary
+var current_isotope: Isotope
 var mass_per_click: float = 1.0
 var temperature: float = 0.0
 var max_temperature: float = 100.0
@@ -16,7 +16,8 @@ var ignite: bool = false
 @export var temperature_loss: float = 0.1
 @export var reactions_intensity: float = 0.1
 
-#reactions
+#isotopes and reactions
+@export var isotopes: Array[Isotope]
 @export var reactions: Array[Reaction]
 
 # child nodes
@@ -25,9 +26,11 @@ var ignite: bool = false
 @onready var light: PointLight2D = $PointLight2D
 
 func _ready() -> void:
-	for isotope in Reaction.ISOTOPE.values():
-		masses.insert(isotope, 0.0)
-	masses[0] = 10.0
+	for isotope in isotopes:
+		masses[isotope.name] = 0.0
+	masses[isotopes[0].name] = 10.0
+
+	current_isotope = isotopes[0]
 
 func _process(delta: float) -> void:
 	if temperature > 0.0:
@@ -40,13 +43,17 @@ func _process(delta: float) -> void:
 		light.enabled =false
 	for reaction:Reaction in reactions:
 		if temperature > reaction.temperature_threshold:
-			masses[reaction.product_isotope] += masses[reaction.consume_isotope] * (1.0-reaction.mass_defect) * delta * reactions_intensity * (temperature - reaction.temperature_threshold)
-			temperature += masses[reaction.consume_isotope] * reaction.mass_defect * mass_to_temperature * delta * reactions_intensity
-			masses[reaction.consume_isotope] -= masses[reaction.consume_isotope] * delta * reactions_intensity * (temperature - reaction.temperature_threshold)
+			for input_isotope in reaction.input_chanel.isotopes:
+				for output_isotope in reaction.output_chanel.isotopes:
+					masses[output_isotope.name] += masses[input_isotope.name] * reaction.mass_defect * reaction.input_chanel.probability * reaction.output_chanel.probability / reaction.input_chanel.isotopes.size() / reaction.output_chanel.isotopes.size() * (temperature - reaction.temperature_threshold) * reactions_intensity * delta
+					temperature += masses[input_isotope.name] * (1-reaction.mass_defect) * reaction.energy_gain * reaction.input_chanel.probability * reaction.output_chanel.probability / reaction.input_chanel.isotopes.size() / reaction.output_chanel.isotopes.size() * mass_to_temperature * delta * reactions_intensity
+					masses[input_isotope.name] -= masses[input_isotope.name] * reaction.input_chanel.probability * reaction.output_chanel.probability / reaction.input_chanel.isotopes.size() / reaction.output_chanel.isotopes.size() * (temperature - reaction.temperature_threshold) * reactions_intensity * delta
 		elif sum_masses() > reaction.mass_threshold:
-			masses[reaction.product_isotope] += masses[reaction.consume_isotope] * (1.0-reaction.mass_defect) * delta * reactions_intensity
-			temperature += masses[reaction.consume_isotope] * reaction.mass_defect * mass_to_temperature * delta * reactions_intensity
-			masses[reaction.consume_isotope] -= masses[reaction.consume_isotope] * delta * reactions_intensity
+			for input_isotope in reaction.input_chanel.isotopes:
+				for output_isotope in reaction.output_chanel.isotopes:
+					masses[output_isotope.name] += masses[input_isotope.name] * reaction.mass_defect * reaction.input_chanel.probability * reaction.output_chanel.probability / reaction.input_chanel.isotopes.size() / reaction.output_chanel.isotopes.size() * reactions_intensity * delta
+					temperature += masses[input_isotope.name] * (1-reaction.mass_defect) * reaction.energy_gain * reaction.input_chanel.probability * reaction.output_chanel.probability / reaction.input_chanel.isotopes.size() / reaction.output_chanel.isotopes.size() * mass_to_temperature * delta * reactions_intensity
+					masses[input_isotope.name] -= masses[input_isotope.name] * reaction.input_chanel.probability * reaction.output_chanel.probability / reaction.input_chanel.isotopes.size() / reaction.output_chanel.isotopes.size() * reactions_intensity * delta
 
 	#set max mass
 	max_temperature = sum_masses()*mass_to_max_temperature
@@ -57,19 +64,19 @@ func _process(delta: float) -> void:
 	if temperature > max_temperature:
 		particle.explosiveness = 1.0
 	light.energy = temperature/max_temperature*16
-	
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
-		masses[current_isotope] += mass_per_click
+		masses[current_isotope.name] += mass_per_click
 
 func sum_masses() -> float:
 	var sum: float = 0.0
-	for mass in masses:
-		sum += mass
+	for isotope in isotopes:
+		sum += masses[isotope.name]
 	return sum
 
 func change_isotope(index: int) -> void:
-	current_isotope = index
+	current_isotope = isotopes[index]
 
 func change_mass_per_click(value: float) -> void:
 	mass_per_click = value

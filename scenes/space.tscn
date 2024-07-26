@@ -1,16 +1,53 @@
-[gd_scene load_steps=18 format=3 uid="uid://di86t48oqn1vh"]
+[gd_scene load_steps=55 format=3 uid="uid://di86t48oqn1vh"]
 
 [ext_resource type="Texture2D" uid="uid://c4hbgdfudk0lu" path="res://sprites/webb_nebula.png" id="1_7dvpd"]
 [ext_resource type="Script" path="res://scripts/UI/ui.gd" id="1_32j34"]
 [ext_resource type="Script" path="res://scripts/star.gd" id="1_s3bkw"]
-[ext_resource type="Resource" uid="uid://dy1rnmmncijea" path="res://reactions/p_d.tres" id="2_0vef3"]
-[ext_resource type="Resource" uid="uid://idkk4jrkpfbv" path="res://reactions/d_He.tres" id="3_rqwef"]
-[ext_resource type="Resource" uid="uid://bi14y0mwbbe8k" path="res://reactions/He_C.tres" id="4_fj361"]
-[ext_resource type="Resource" uid="uid://bmh41rvvbh5dj" path="res://reactions/He_N.tres" id="5_ikn2y"]
-[ext_resource type="Resource" uid="uid://blvkywkwy372k" path="res://reactions/He_O.tres" id="6_4s5as"]
-[ext_resource type="Resource" uid="uid://fslefthc0eqw" path="res://reactions/N_Fe.tres" id="7_q78gj"]
+[ext_resource type="Resource" uid="uid://bcxjfgxa7n0ft" path="res://isotopes/H.tres" id="4_37iw5"]
+[ext_resource type="Resource" uid="uid://rgjoo8nf300a" path="res://isotopes/D.tres" id="5_ylyc8"]
+[ext_resource type="Resource" uid="uid://cvt2h0i1fu7xs" path="res://isotopes/3He.tres" id="6_vsque"]
+[ext_resource type="Resource" uid="uid://b3jgflkgva4ha" path="res://isotopes/4He.tres" id="7_1478u"]
 [ext_resource type="Texture2D" uid="uid://bdedrbo6jotjm" path="res://sprites/circle.svg" id="8_g0cf4"]
+[ext_resource type="Resource" uid="uid://cdruq61hjlyb1" path="res://isotopes/12C.tres" id="8_msg8r"]
+[ext_resource type="Resource" uid="uid://bklllkkjjti3m" path="res://isotopes/13C.tres" id="9_3quw3"]
 [ext_resource type="Script" path="res://scripts/planet.gd" id="9_d0ugd"]
+[ext_resource type="Resource" uid="uid://dbbywyt14hya6" path="res://isotopes/13N.tres" id="10_ypfda"]
+[ext_resource type="Resource" uid="uid://bsxpk4q887q7t" path="res://isotopes/14N.tres" id="11_36v7e"]
+[ext_resource type="Resource" uid="uid://damb17x2gm2bx" path="res://isotopes/15N.tres" id="12_m5tcm"]
+[ext_resource type="Resource" uid="uid://box0y7l6skye7" path="res://isotopes/15O.tres" id="13_bdto1"]
+[ext_resource type="Resource" uid="uid://c026owfpw8y7o" path="res://isotopes/16O.tres" id="14_apno4"]
+[ext_resource type="Resource" uid="uid://bawolt1cog0be" path="res://isotopes/20Ne.tres" id="15_qoak0"]
+[ext_resource type="Resource" uid="uid://b0apulywvarls" path="res://isotopes/24Mg.tres" id="16_1ow11"]
+[ext_resource type="Resource" uid="uid://csope5u0qq2j5" path="res://isotopes/28Si.tres" id="17_molc5"]
+[ext_resource type="Resource" uid="uid://bfutj6smdfvay" path="res://isotopes/32S.tres" id="18_lw24i"]
+[ext_resource type="Resource" uid="uid://bcvxahkn5y6s6" path="res://isotopes/36Ar.tres" id="19_bqtcl"]
+[ext_resource type="Resource" uid="uid://w754nrv4o4c4" path="res://isotopes/40Ca.tres" id="20_d7dr1"]
+[ext_resource type="Resource" uid="uid://csqwomjscgh6b" path="res://isotopes/44Ti.tres" id="21_iwke8"]
+[ext_resource type="Resource" uid="uid://d3wuqy6gink7a" path="res://isotopes/48Cr.tres" id="22_r0n1e"]
+[ext_resource type="Resource" uid="uid://yfq87ey3m0xa" path="res://isotopes/52Fe.tres" id="23_f2gaf"]
+[ext_resource type="Resource" uid="uid://d0kd2rgi3q4qi" path="res://isotopes/56Ni.tres" id="24_o72ua"]
+[ext_resource type="Resource" uid="uid://dqomxk2jn13lp" path="res://reactions/p_p/p_p_to_d.tres" id="25_fgjjj"]
+[ext_resource type="Resource" uid="uid://c8o1vicejej5r" path="res://reactions/helium_fusion/12C+4He_to_16O.tres" id="25_rp3sr"]
+[ext_resource type="Resource" uid="uid://dbmth880m8uuy" path="res://reactions/helium_fusion/16O_4He_to_20Ne.tres" id="26_ar6q6"]
+[ext_resource type="Resource" uid="uid://c83psejdcptpd" path="res://reactions/p_p/p_d_to_3He.tres" id="26_pa77u"]
+[ext_resource type="Resource" uid="uid://clx6rhgcsnmcp" path="res://reactions/helium_fusion/20Ne_4He_to_24Mg.tres" id="27_vfikf"]
+[ext_resource type="Resource" uid="uid://ce0o3t7wc2ijq" path="res://reactions/p_p/p_p_I_branch.tres" id="27_x6dhr"]
+[ext_resource type="Resource" uid="uid://cwnssh0x0yufk" path="res://reactions/helium_fusion/24Mg_4He_to_28Si.tres" id="28_1r7ba"]
+[ext_resource type="Resource" uid="uid://cf76me0j5qaec" path="res://reactions/p_p/p_p_II_branch.tres" id="28_wnl00"]
+[ext_resource type="Resource" uid="uid://b35u78duudaai" path="res://reactions/CNO-I/12C_p_to_13N.tres" id="29_esa11"]
+[ext_resource type="Resource" uid="uid://ku6w32a4fiyu" path="res://reactions/helium_fusion/28Si_4He_to_32S.tres" id="29_tudtt"]
+[ext_resource type="Resource" uid="uid://sarkq0p4uxq4" path="res://reactions/CNO-I/13N_to_13C.tres" id="30_hn7i1"]
+[ext_resource type="Resource" uid="uid://cvp6okyh132dd" path="res://reactions/helium_fusion/32S_4He_to_36Ar.tres" id="30_v3oi8"]
+[ext_resource type="Resource" uid="uid://caraswv2kqgj1" path="res://reactions/helium_fusion/36Ar_4He_to_40Ca.tres" id="31_7c6fe"]
+[ext_resource type="Resource" uid="uid://dlyk6w5ibroxp" path="res://reactions/CNO-I/13C_p_to_14N.tres" id="31_snjlv"]
+[ext_resource type="Resource" uid="uid://cp2hwxos36v78" path="res://reactions/CNO-I/14N_p_to_15O.tres" id="32_cp4sw"]
+[ext_resource type="Resource" uid="uid://bhswouxrhohno" path="res://reactions/helium_fusion/40Ca_4He_to_44Ti.tres" id="32_fea4c"]
+[ext_resource type="Resource" uid="uid://c5oeqwqe83lsi" path="res://reactions/helium_fusion/44Ti_4He_to_48Cr.tres" id="33_78dqu"]
+[ext_resource type="Resource" uid="uid://b2lae5y8dspc6" path="res://reactions/CNO-I/15O_to_15N.tres" id="33_ifrx7"]
+[ext_resource type="Resource" uid="uid://bp6hsc1vg4lhn" path="res://reactions/CNO-I/15N_p_to_12C_4He.tres" id="34_ekha7"]
+[ext_resource type="Resource" uid="uid://c4kq5yxvf5khs" path="res://reactions/helium_fusion/48Cr_4He_to_52Fe.tres" id="34_x3pkm"]
+[ext_resource type="Resource" uid="uid://ulchafbk8hln" path="res://reactions/helium_fusion/52Fe_4He_to_56Ni.tres" id="35_48wsc"]
+[ext_resource type="Resource" uid="uid://rs41paf3l23h" path="res://reactions/helium_fusion/triple_alpha.tres" id="35_qnhv2"]
 
 [sub_resource type="Gradient" id="Gradient_h3egs"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
@@ -177,11 +214,12 @@ texture = ExtResource("1_7dvpd")
 
 [node name="Star" type="Node2D" parent="."]
 script = ExtResource("1_s3bkw")
-mass_to_temperature = 20.0
+mass_to_temperature = 200.0
 mass_to_max_temperature = 5.0
-temperature_loss = 2.0
-reactions_intensity = 0.01
-reactions = Array[Resource("res://scripts/reaction.gd")]([ExtResource("2_0vef3"), ExtResource("3_rqwef"), ExtResource("4_fj361"), ExtResource("5_ikn2y"), ExtResource("6_4s5as"), ExtResource("7_q78gj")])
+temperature_loss = 1.0
+reactions_intensity = 0.001
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("4_37iw5"), ExtResource("5_ylyc8"), ExtResource("6_vsque"), ExtResource("7_1478u"), ExtResource("8_msg8r"), ExtResource("9_3quw3"), ExtResource("10_ypfda"), ExtResource("11_36v7e"), ExtResource("12_m5tcm"), ExtResource("13_bdto1"), ExtResource("14_apno4"), ExtResource("15_qoak0"), ExtResource("16_1ow11"), ExtResource("17_molc5"), ExtResource("18_lw24i"), ExtResource("19_bqtcl"), ExtResource("20_d7dr1"), ExtResource("21_iwke8"), ExtResource("22_r0n1e"), ExtResource("23_f2gaf"), ExtResource("24_o72ua")])
+reactions = Array[Resource("res://scripts/reaction.gd")]([ExtResource("25_fgjjj"), ExtResource("26_pa77u"), ExtResource("27_x6dhr"), ExtResource("28_wnl00"), ExtResource("29_esa11"), ExtResource("30_hn7i1"), ExtResource("31_snjlv"), ExtResource("32_cp4sw"), ExtResource("33_ifrx7"), ExtResource("34_ekha7"), ExtResource("35_qnhv2"), ExtResource("25_rp3sr"), ExtResource("26_ar6q6"), ExtResource("27_vfikf"), ExtResource("28_1r7ba"), ExtResource("29_tudtt"), ExtResource("30_v3oi8"), ExtResource("31_7c6fe"), ExtResource("32_fea4c"), ExtResource("33_78dqu"), ExtResource("34_x3pkm"), ExtResource("35_48wsc")])
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="Star"]
 emitting = false

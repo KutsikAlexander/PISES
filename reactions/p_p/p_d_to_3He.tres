@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Reaction" load_steps=8 format=3 uid="uid://c83psejdcptpd"]
+
+[ext_resource type="Script" path="res://scripts/chanel.gd" id="1_0rdk6"]
+[ext_resource type="Resource" uid="uid://bcxjfgxa7n0ft" path="res://isotopes/H.tres" id="1_75v0d"]
+[ext_resource type="Resource" uid="uid://rgjoo8nf300a" path="res://isotopes/D.tres" id="2_j8slq"]
+[ext_resource type="Script" path="res://scripts/reaction.gd" id="2_uofjd"]
+[ext_resource type="Resource" uid="uid://cvt2h0i1fu7xs" path="res://isotopes/3He.tres" id="4_7kxy1"]
+
+[sub_resource type="Resource" id="Resource_pye75"]
+script = ExtResource("1_0rdk6")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("1_75v0d"), ExtResource("2_j8slq")])
+probability = 1.0
+
+[sub_resource type="Resource" id="Resource_nvdyi"]
+script = ExtResource("1_0rdk6")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("4_7kxy1")])
+probability = 1.0
+
+[resource]
+script = ExtResource("2_uofjd")
+reaction_name = "P+D=3He"
+description = ""
+mass_threshold = 1000.0
+temperature_threshold = 5.0
+input_chanel = SubResource("Resource_pye75")
+output_chanel = SubResource("Resource_nvdyi")
+mass_defect = 0.9
+energy_gain = 5.5

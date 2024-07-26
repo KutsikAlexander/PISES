@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Reaction" load_steps=8 format=3 uid="uid://b35u78duudaai"]
+
+[ext_resource type="Resource" uid="uid://bcxjfgxa7n0ft" path="res://isotopes/H.tres" id="1_kggmh"]
+[ext_resource type="Resource" uid="uid://cdruq61hjlyb1" path="res://isotopes/12C.tres" id="2_x88c1"]
+[ext_resource type="Script" path="res://scripts/chanel.gd" id="3_yvsn8"]
+[ext_resource type="Resource" uid="uid://bklllkkjjti3m" path="res://isotopes/13C.tres" id="4_3mcx8"]
+[ext_resource type="Script" path="res://scripts/reaction.gd" id="5_75pvb"]
+
+[sub_resource type="Resource" id="Resource_tv8wl"]
+script = ExtResource("3_yvsn8")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("1_kggmh"), ExtResource("2_x88c1")])
+probability = 1.0
+
+[sub_resource type="Resource" id="Resource_keqgs"]
+script = ExtResource("3_yvsn8")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("4_3mcx8")])
+probability = 1.0
+
+[resource]
+script = ExtResource("5_75pvb")
+reaction_name = "12C+p=13N"
+description = "part of CNO-I"
+mass_threshold = 10000.0
+temperature_threshold = 15.0
+input_chanel = SubResource("Resource_tv8wl")
+output_chanel = SubResource("Resource_keqgs")
+mass_defect = 0.9
+energy_gain = 1.95

@@ -14,14 +14,14 @@ var reaction_on_temperature_scale: PackedScene = load("res://scenes/UI/reaction_
 
 func _ready() -> void:
 	# construct isotope menu
-	for isotope in Reaction.ISOTOPE.values():
-		isotope_menu.add_item(Reaction.ISOTOPE.keys()[isotope])
-		isotope_menu.set_item_disabled(isotope, true)
+	for i: int in range(0, star.isotopes.size()):
+		isotope_menu.add_item(star.isotopes[i].name)
+		isotope_menu.set_item_disabled(i, true)
 	isotope_menu.set_item_disabled(0, false)
 	isotope_menu.select(0)
 
 	# construct isotope mass scale
-	for isotope in Reaction.ISOTOPE:
+	for isotope in star.isotopes:
 		mass_scale.add_child(isotope_on_mass_scale.instantiate())
 
 	# construct reaction temperature scale
@@ -37,31 +37,32 @@ func _process(delta: float) -> void:
 	# activate new isotope
 	for reaction:Reaction in star.reactions:
 		if star.temperature > reaction.temperature_threshold:
-			isotope_menu.set_item_disabled(reaction.product_isotope,false)
+			for isotope in reaction.output_chanel.isotopes:
+				isotope_menu.set_item_disabled(reaction.output_chanel.isotopes.find(isotope),false)
 
 	# update labels
 	var mass_text: String = ""
-	for isotope in Reaction.ISOTOPE.values():
-		if star.masses[isotope] > 0.0:
-			mass_text += Reaction.ISOTOPE.keys()[isotope] + ":" + str(floor(star.masses[isotope])) + " Gg (" + str(floor(star.masses[isotope]/star.sum_masses()*100)) + "%) \n"
+	for isotope in star.isotopes:
+		if star.masses[isotope.name] > 0.0:
+			mass_text += isotope.name + ":" + str(floor(star.masses[isotope.name])) + " Gg (" + str(floor(star.masses[isotope.name]/star.sum_masses()*100)) + "%) \n"
 	mass_label.text = mass_text
-	temperature_label.text = str(floor(star.temperature)) + " kK / " + str(floor(star.max_temperature)) + " kK"
+	temperature_label.text = str(floor(star.temperature)) + " MK / " + str(floor(star.max_temperature)) + " MK"
 
 	# mass scale
-	for i in range(0, Reaction.ISOTOPE.size()):
-		var relative_mass: float = star.masses[i]/star.sum_masses()
+	for i in range(0, star.isotopes.size()):
+		var relative_mass: float = star.masses[star.isotopes[i].name]/star.sum_masses()
 		if relative_mass > 0.01:
 			mass_scale.get_child(i).visible = true
 			mass_scale.get_child(i).size_flags_stretch_ratio = relative_mass
-			mass_scale.get_child(i).tooltip_text = Reaction.ISOTOPE.keys()[i] + " " + str(floor(star.masses[i])) + " Gg"
-			mass_scale.get_child(i).get_node("Label").text = Reaction.ISOTOPE.keys()[i] + " (" + str(floor(relative_mass*100)) + "%)"
+			mass_scale.get_child(i).tooltip_text = star.isotopes[i].name + " " + str(floor(star.masses[star.isotopes[i].name])) + " Gg"
+			mass_scale.get_child(i).get_node("Label").text = star.isotopes[i].name + " (" + str(floor(relative_mass*100)) + "%)"
 		else:
 			mass_scale.get_child(i).visible = false
 
 	# temperature scale
 	temperature_scale.get_node("EmptySpace").size_flags_stretch_ratio = (star.max_temperature-star.temperature)/star.max_temperature
 	temperature_scale.get_node("CurrentTemperature").size_flags_stretch_ratio = star.temperature/star.max_temperature
-	temperature_scale.get_node("CurrentTemperature/Label").text = str(floor(star.temperature)) + " kK"
+	temperature_scale.get_node("CurrentTemperature/Label").text = str(floor(star.temperature)) + " MK"
 	temperature_scale.get_node("CurrentTemperature").self_modulate = Color.from_hsv(star.temperature/star.max_temperature, 1.0, 1.0)
 
 	#reactions temperature scale

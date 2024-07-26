@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Reaction" load_steps=8 format=3 uid="uid://caraswv2kqgj1"]
+
+[ext_resource type="Script" path="res://scripts/reaction.gd" id="1_6gq2r"]
+[ext_resource type="Resource" uid="uid://bcvxahkn5y6s6" path="res://isotopes/36Ar.tres" id="1_tssjt"]
+[ext_resource type="Resource" uid="uid://b3jgflkgva4ha" path="res://isotopes/4He.tres" id="2_f4u2h"]
+[ext_resource type="Script" path="res://scripts/chanel.gd" id="3_r00df"]
+[ext_resource type="Resource" uid="uid://w754nrv4o4c4" path="res://isotopes/40Ca.tres" id="4_medhe"]
+
+[sub_resource type="Resource" id="Resource_k3i4i"]
+script = ExtResource("3_r00df")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("1_tssjt"), ExtResource("2_f4u2h")])
+probability = 1.0
+
+[sub_resource type="Resource" id="Resource_isgxw"]
+script = ExtResource("3_r00df")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("4_medhe")])
+probability = 1.0
+
+[resource]
+script = ExtResource("1_6gq2r")
+reaction_name = "36Ar+4He=40Ca"
+description = ""
+mass_threshold = 100000.0
+temperature_threshold = 800.0
+input_chanel = SubResource("Resource_k3i4i")
+output_chanel = SubResource("Resource_isgxw")
+mass_defect = 0.9
+energy_gain = 7.04

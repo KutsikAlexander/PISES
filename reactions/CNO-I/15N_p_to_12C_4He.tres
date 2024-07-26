@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="Reaction" load_steps=9 format=3 uid="uid://bp6hsc1vg4lhn"]
+
+[ext_resource type="Script" path="res://scripts/reaction.gd" id="1_6dwas"]
+[ext_resource type="Resource" uid="uid://damb17x2gm2bx" path="res://isotopes/15N.tres" id="1_a0ttk"]
+[ext_resource type="Resource" uid="uid://bcxjfgxa7n0ft" path="res://isotopes/H.tres" id="2_ihb52"]
+[ext_resource type="Script" path="res://scripts/chanel.gd" id="3_csrpc"]
+[ext_resource type="Resource" uid="uid://cdruq61hjlyb1" path="res://isotopes/12C.tres" id="4_esdql"]
+[ext_resource type="Resource" uid="uid://b3jgflkgva4ha" path="res://isotopes/4He.tres" id="5_ifxb1"]
+
+[sub_resource type="Resource" id="Resource_3o81u"]
+script = ExtResource("3_csrpc")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("1_a0ttk"), ExtResource("2_ihb52")])
+probability = 1.0
+
+[sub_resource type="Resource" id="Resource_7uh36"]
+script = ExtResource("3_csrpc")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("4_esdql"), ExtResource("5_ifxb1")])
+probability = 1.0
+
+[resource]
+script = ExtResource("1_6dwas")
+reaction_name = "15N+H=12C+4He"
+description = ""
+mass_threshold = 10000.0
+temperature_threshold = 20.0
+input_chanel = SubResource("Resource_3o81u")
+output_chanel = SubResource("Resource_7uh36")
+mass_defect = 0.9
+energy_gain = 4.96

@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Reaction" load_steps=8 format=3 uid="uid://cf76me0j5qaec"]
+
+[ext_resource type="Script" path="res://scripts/chanel.gd" id="1_v0mp0"]
+[ext_resource type="Resource" uid="uid://cvt2h0i1fu7xs" path="res://isotopes/3He.tres" id="1_ya5j4"]
+[ext_resource type="Resource" uid="uid://b3jgflkgva4ha" path="res://isotopes/4He.tres" id="2_1f5rp"]
+[ext_resource type="Script" path="res://scripts/reaction.gd" id="2_5kekp"]
+[ext_resource type="Resource" uid="uid://bcxjfgxa7n0ft" path="res://isotopes/H.tres" id="3_kkoxc"]
+
+[sub_resource type="Resource" id="Resource_niesb"]
+script = ExtResource("1_v0mp0")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("1_ya5j4"), ExtResource("2_1f5rp"), ExtResource("3_kkoxc")])
+probability = 1.0
+
+[sub_resource type="Resource" id="Resource_vn7pe"]
+script = ExtResource("1_v0mp0")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("2_1f5rp"), ExtResource("2_1f5rp")])
+probability = 1.0
+
+[resource]
+script = ExtResource("2_5kekp")
+reaction_name = "p-p II branch"
+description = ""
+mass_threshold = 10000.0
+temperature_threshold = 18.0
+input_chanel = SubResource("Resource_niesb")
+output_chanel = SubResource("Resource_vn7pe")
+mass_defect = 0.9
+energy_gain = 17.35

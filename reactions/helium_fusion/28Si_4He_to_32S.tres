@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Reaction" load_steps=8 format=3 uid="uid://ku6w32a4fiyu"]
+
+[ext_resource type="Resource" uid="uid://csope5u0qq2j5" path="res://isotopes/28Si.tres" id="1_42v0f"]
+[ext_resource type="Script" path="res://scripts/reaction.gd" id="1_r8d11"]
+[ext_resource type="Resource" uid="uid://b3jgflkgva4ha" path="res://isotopes/4He.tres" id="2_mo5v8"]
+[ext_resource type="Script" path="res://scripts/chanel.gd" id="3_x7lsp"]
+[ext_resource type="Resource" uid="uid://bfutj6smdfvay" path="res://isotopes/32S.tres" id="4_1uh5b"]
+
+[sub_resource type="Resource" id="Resource_oj11y"]
+script = ExtResource("3_x7lsp")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("1_42v0f"), ExtResource("2_mo5v8")])
+probability = 1.0
+
+[sub_resource type="Resource" id="Resource_ihfru"]
+script = ExtResource("3_x7lsp")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("4_1uh5b")])
+probability = 1.0
+
+[resource]
+script = ExtResource("1_r8d11")
+reaction_name = "28Si+4He=32S"
+description = ""
+mass_threshold = 100000.0
+temperature_threshold = 600.0
+input_chanel = SubResource("Resource_oj11y")
+output_chanel = SubResource("Resource_ihfru")
+mass_defect = 0.9
+energy_gain = 6.95

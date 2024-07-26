@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Isotope" load_steps=2 format=3 uid="uid://csope5u0qq2j5"]
+
+[ext_resource type="Script" path="res://scripts/isotope.gd" id="1_r1dfy"]
+
+[resource]
+script = ExtResource("1_r1dfy")
+A = 28
+Z = 14
+name = "28Si"

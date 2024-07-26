@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="Reaction" load_steps=7 format=3 uid="uid://sarkq0p4uxq4"]
+
+[ext_resource type="Resource" uid="uid://dbbywyt14hya6" path="res://isotopes/13N.tres" id="1_0bvad"]
+[ext_resource type="Script" path="res://scripts/reaction.gd" id="1_hcbma"]
+[ext_resource type="Script" path="res://scripts/chanel.gd" id="2_ef1xh"]
+[ext_resource type="Resource" uid="uid://bklllkkjjti3m" path="res://isotopes/13C.tres" id="3_ihvtk"]
+
+[sub_resource type="Resource" id="Resource_4iwc5"]
+script = ExtResource("2_ef1xh")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("1_0bvad")])
+probability = 0.5
+
+[sub_resource type="Resource" id="Resource_n56h8"]
+script = ExtResource("2_ef1xh")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("3_ihvtk")])
+probability = 1.0
+
+[resource]
+script = ExtResource("1_hcbma")
+reaction_name = "13N decay"
+description = "13N decay"
+mass_threshold = 0.0
+temperature_threshold = 0.0
+input_chanel = SubResource("Resource_4iwc5")
+output_chanel = SubResource("Resource_n56h8")
+mass_defect = 0.9
+energy_gain = 1.2
