@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://di86t48oqn1vh"]
+[gd_scene load_steps=18 format=3 uid="uid://di86t48oqn1vh"]
 
 [ext_resource type="Texture2D" uid="uid://c4hbgdfudk0lu" path="res://sprites/webb_nebula.png" id="1_7dvpd"]
+[ext_resource type="Script" path="res://scripts/UI/ui.gd" id="1_32j34"]
 [ext_resource type="Script" path="res://scripts/star.gd" id="1_s3bkw"]
 [ext_resource type="Resource" uid="uid://dy1rnmmncijea" path="res://reactions/p_d.tres" id="2_0vef3"]
 [ext_resource type="Resource" uid="uid://idkk4jrkpfbv" path="res://reactions/d_He.tres" id="3_rqwef"]
@@ -42,7 +43,16 @@ polygon = PackedVector2Array(0, -1, 0, -26, 19, -21, 26, -2, 19, 20, 1, 24)
 
 [node name="Space" type="Node2D"]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("star", "mass_label", "temperature_label", "isotope_menu", "mass_per_click_spin_box", "mass_scale", "temperature_scale", "reactions_temperature_scale")]
+script = ExtResource("1_32j34")
+star = NodePath("../Star")
+mass_label = NodePath("PanelContainer1/MarginContainer/GridContainer/MassLabel")
+temperature_label = NodePath("PanelContainer1/MarginContainer/GridContainer/TemperatureLabel")
+isotope_menu = NodePath("PanelContainer2/GridContainer/OptionButton")
+mass_per_click_spin_box = NodePath("PanelContainer2/GridContainer/SpinBox")
+mass_scale = NodePath("MassScale/VBoxContainer")
+temperature_scale = NodePath("TemperatureScale/StarTemperature")
+reactions_temperature_scale = NodePath("TemperatureScale/ReactionsTemperature")
 
 [node name="PanelContainer1" type="PanelContainer" parent="CanvasLayer"]
 offset_right = 40.0
@@ -102,7 +112,7 @@ rounded = true
 allow_greater = true
 custom_arrow_step = 1.0
 
-[node name="PanelContainer3" type="PanelContainer" parent="CanvasLayer"]
+[node name="MassScale" type="PanelContainer" parent="CanvasLayer"]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -110,187 +120,11 @@ offset_top = -522.0
 offset_right = 131.0
 grow_vertical = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer3"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MassScale"]
 layout_mode = 2
 alignment = 2
 
-[node name="ColorRect1" type="ColorRect" parent="CanvasLayer/PanelContainer3/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-color = Color(0.416667, 1, 0, 1)
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer3/VBoxContainer/ColorRect1"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -29.0
-offset_top = -11.5
-offset_right = 29.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Isotope"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/PanelContainer3/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-color = Color(0.416667, 1, 0, 1)
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer3/VBoxContainer/ColorRect2"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -29.0
-offset_top = -11.5
-offset_right = 29.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Isotope"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/PanelContainer3/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-color = Color(0.416667, 1, 0, 1)
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer3/VBoxContainer/ColorRect3"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -29.0
-offset_top = -11.5
-offset_right = 29.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Isotope"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect4" type="ColorRect" parent="CanvasLayer/PanelContainer3/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-color = Color(0.416667, 1, 0, 1)
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer3/VBoxContainer/ColorRect4"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -29.0
-offset_top = -11.5
-offset_right = 29.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Isotope"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect5" type="ColorRect" parent="CanvasLayer/PanelContainer3/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-color = Color(0.416667, 1, 0, 1)
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer3/VBoxContainer/ColorRect5"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -29.0
-offset_top = -11.5
-offset_right = 29.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Isotope"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect6" type="ColorRect" parent="CanvasLayer/PanelContainer3/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-color = Color(0.416667, 1, 0, 1)
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer3/VBoxContainer/ColorRect6"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -29.0
-offset_top = -11.5
-offset_right = 29.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Isotope"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect7" type="ColorRect" parent="CanvasLayer/PanelContainer3/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-color = Color(0.416667, 1, 0, 1)
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer3/VBoxContainer/ColorRect7"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -29.0
-offset_top = -11.5
-offset_right = 29.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Isotope"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect8" type="ColorRect" parent="CanvasLayer/PanelContainer3/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-color = Color(0.416667, 1, 0, 1)
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer3/VBoxContainer/ColorRect8"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -29.0
-offset_top = -11.5
-offset_right = 29.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Isotope"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="PanelContainer4" type="PanelContainer" parent="CanvasLayer"]
+[node name="TemperatureScale" type="PanelContainer" parent="CanvasLayer"]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -301,19 +135,19 @@ offset_top = -534.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer4"]
+[node name="StarTemperature" type="VBoxContainer" parent="CanvasLayer/TemperatureScale"]
 layout_mode = 2
+alignment = 2
 
-[node name="EmptySpace" type="Control" parent="CanvasLayer/PanelContainer4/VBoxContainer"]
+[node name="EmptySpace" type="Control" parent="CanvasLayer/TemperatureScale/StarTemperature"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CurrentTemperature" type="ColorRect" parent="CanvasLayer/TemperatureScale/StarTemperature"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CurrentTemperature" type="ColorRect" parent="CanvasLayer/PanelContainer4/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-color = Color(1, 1, 0, 1)
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer4/VBoxContainer/CurrentTemperature"]
+[node name="Label" type="Label" parent="CanvasLayer/TemperatureScale/StarTemperature/CurrentTemperature"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -328,100 +162,11 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Current Temperature"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/PanelContainer4"]
+[node name="ReactionsTemperature" type="VBoxContainer" parent="CanvasLayer/TemperatureScale"]
 layout_mode = 2
+alignment = 2
 
-[node name="EmptySpace7" type="Control" parent="CanvasLayer/PanelContainer4/VBoxContainer2"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HSeparator6" type="HSeparator" parent="CanvasLayer/PanelContainer4/VBoxContainer2"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer4/VBoxContainer2/HSeparator6"]
-layout_mode = 1
-offset_left = -182.0
-offset_top = -8.0
-offset_right = -11.0
-offset_bottom = 15.0
-text = "Reaction temperature"
-
-[node name="EmptySpace6" type="Control" parent="CanvasLayer/PanelContainer4/VBoxContainer2"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HSeparator5" type="HSeparator" parent="CanvasLayer/PanelContainer4/VBoxContainer2"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer4/VBoxContainer2/HSeparator5"]
-layout_mode = 1
-offset_left = -182.0
-offset_top = -8.0
-offset_right = -11.0
-offset_bottom = 15.0
-text = "Reaction temperature"
-
-[node name="EmptySpace5" type="Control" parent="CanvasLayer/PanelContainer4/VBoxContainer2"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HSeparator4" type="HSeparator" parent="CanvasLayer/PanelContainer4/VBoxContainer2"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer4/VBoxContainer2/HSeparator4"]
-layout_mode = 1
-offset_left = -182.0
-offset_top = -8.0
-offset_right = -11.0
-offset_bottom = 15.0
-text = "Reaction temperature"
-
-[node name="EmptySpace4" type="Control" parent="CanvasLayer/PanelContainer4/VBoxContainer2"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HSeparator3" type="HSeparator" parent="CanvasLayer/PanelContainer4/VBoxContainer2"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer4/VBoxContainer2/HSeparator3"]
-layout_mode = 1
-offset_left = -182.0
-offset_top = -8.0
-offset_right = -11.0
-offset_bottom = 15.0
-text = "Reaction temperature"
-
-[node name="EmptySpace3" type="Control" parent="CanvasLayer/PanelContainer4/VBoxContainer2"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HSeparator2" type="HSeparator" parent="CanvasLayer/PanelContainer4/VBoxContainer2"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer4/VBoxContainer2/HSeparator2"]
-layout_mode = 1
-offset_left = -182.0
-offset_top = -8.0
-offset_right = -11.0
-offset_bottom = 15.0
-text = "Reaction temperature"
-
-[node name="EmptySpace2" type="Control" parent="CanvasLayer/PanelContainer4/VBoxContainer2"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HSeparator1" type="HSeparator" parent="CanvasLayer/PanelContainer4/VBoxContainer2"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer4/VBoxContainer2/HSeparator1"]
-layout_mode = 1
-offset_left = -182.0
-offset_top = -8.0
-offset_right = -11.0
-offset_bottom = 15.0
-text = "Reaction temperature"
-
-[node name="EmptySpace1" type="Control" parent="CanvasLayer/PanelContainer4/VBoxContainer2"]
+[node name="EmptySpace" type="Control" parent="CanvasLayer/TemperatureScale/ReactionsTemperature"]
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -430,20 +175,13 @@ size_flags_vertical = 3
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_7dvpd")
 
-[node name="Star" type="Node2D" parent="." node_paths=PackedStringArray("mass_label", "temperature_label", "isotope_menu", "mass_per_click_spin_box", "mass_scale", "temperature_scale", "reactions_temperature_scale")]
+[node name="Star" type="Node2D" parent="."]
 script = ExtResource("1_s3bkw")
-mass_to_temperature = 10.0
-mass_to_max_temperature = 10.0
-temperature_loss = 1.0
+mass_to_temperature = 20.0
+mass_to_max_temperature = 5.0
+temperature_loss = 2.0
 reactions_intensity = 0.01
 reactions = Array[Resource("res://scripts/reaction.gd")]([ExtResource("2_0vef3"), ExtResource("3_rqwef"), ExtResource("4_fj361"), ExtResource("5_ikn2y"), ExtResource("6_4s5as"), ExtResource("7_q78gj")])
-mass_label = NodePath("../CanvasLayer/PanelContainer1/MarginContainer/GridContainer/MassLabel")
-temperature_label = NodePath("../CanvasLayer/PanelContainer1/MarginContainer/GridContainer/TemperatureLabel")
-isotope_menu = NodePath("../CanvasLayer/PanelContainer2/GridContainer/OptionButton")
-mass_per_click_spin_box = NodePath("../CanvasLayer/PanelContainer2/GridContainer/SpinBox")
-mass_scale = NodePath("../CanvasLayer/PanelContainer3/VBoxContainer")
-temperature_scale = NodePath("../CanvasLayer/PanelContainer4/VBoxContainer")
-reactions_temperature_scale = NodePath("../CanvasLayer/PanelContainer4/VBoxContainer2")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="Star"]
 emitting = false
@@ -481,3 +219,4 @@ position = Vector2(300, 0)
 occluder = SubResource("OccluderPolygon2D_e3r27")
 
 [connection signal="item_selected" from="CanvasLayer/PanelContainer2/GridContainer/OptionButton" to="Star" method="change_isotope"]
+[connection signal="value_changed" from="CanvasLayer/PanelContainer2/GridContainer/SpinBox" to="Star" method="change_mass_per_click"]

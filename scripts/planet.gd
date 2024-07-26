@@ -6,5 +6,5 @@ extends Node2D
 @onready var sprite: Sprite2D = $Sprite2D
 
 func _process(delta: float) -> void:
-    rotate(delta*speed_around_star)
-    sprite.rotate(delta*speed_around_axis)
+	rotate(delta*speed_around_star)
+	sprite.rotate(delta*speed_around_axis)
