@@ -8,7 +8,6 @@ var current_isotope: Isotope
 var mass_per_click: float = 1.0
 var temperature: float = 0.0
 var max_temperature: float = 100.0
-var ignite: bool = false
 
 # coefficients
 @export var mass_to_temperature: float = 1.0
@@ -28,42 +27,51 @@ var ignite: bool = false
 func _ready() -> void:
 	for isotope in isotopes:
 		masses[isotope.name] = 0.0
-	masses[isotopes[0].name] = 10.0
+	masses[isotopes[0].name] = 5.0
 
 	current_isotope = isotopes[0]
 
 func _process(delta: float) -> void:
 	if temperature > 0.0:
-		ignite = true
 		temperature -= temperature_loss * delta
 		particle.emitting = true
 		light.enabled =true
-	if temperature <= 0.0 and ignite:
+	else:
 		particle.emitting = false
 		light.enabled =false
-	for reaction:Reaction in reactions:
-		if temperature > reaction.temperature_threshold:
-			for input_isotope in reaction.input_chanel.isotopes:
-				for output_isotope in reaction.output_chanel.isotopes:
-					masses[output_isotope.name] += masses[input_isotope.name] * reaction.mass_defect * reaction.input_chanel.probability * reaction.output_chanel.probability / reaction.input_chanel.isotopes.size() / reaction.output_chanel.isotopes.size() * (temperature - reaction.temperature_threshold) * reactions_intensity * delta
-					temperature += masses[input_isotope.name] * (1-reaction.mass_defect) * reaction.energy_gain * reaction.input_chanel.probability * reaction.output_chanel.probability / reaction.input_chanel.isotopes.size() / reaction.output_chanel.isotopes.size() * mass_to_temperature * delta * reactions_intensity
-					masses[input_isotope.name] -= masses[input_isotope.name] * reaction.input_chanel.probability * reaction.output_chanel.probability / reaction.input_chanel.isotopes.size() / reaction.output_chanel.isotopes.size() * (temperature - reaction.temperature_threshold) * reactions_intensity * delta
-		elif sum_masses() > reaction.mass_threshold:
-			for input_isotope in reaction.input_chanel.isotopes:
-				for output_isotope in reaction.output_chanel.isotopes:
-					masses[output_isotope.name] += masses[input_isotope.name] * reaction.mass_defect * reaction.input_chanel.probability * reaction.output_chanel.probability / reaction.input_chanel.isotopes.size() / reaction.output_chanel.isotopes.size() * reactions_intensity * delta
-					temperature += masses[input_isotope.name] * (1-reaction.mass_defect) * reaction.energy_gain * reaction.input_chanel.probability * reaction.output_chanel.probability / reaction.input_chanel.isotopes.size() / reaction.output_chanel.isotopes.size() * mass_to_temperature * delta * reactions_intensity
-					masses[input_isotope.name] -= masses[input_isotope.name] * reaction.input_chanel.probability * reaction.output_chanel.probability / reaction.input_chanel.isotopes.size() / reaction.output_chanel.isotopes.size() * reactions_intensity * delta
 
+	for reaction:Reaction in reactions:
+		if temperature > reaction.temperature_threshold or sum_masses() > reaction.mass_threshold:
+			# find bottleneck
+			var bottleneck_mass: float = INF
+			for input_isotope in reaction.input_chanel.isotopes:
+				if masses[input_isotope.name] >= 0.0 and masses[input_isotope.name] < bottleneck_mass:
+					bottleneck_mass = masses[input_isotope.name]
+			
+			# for the safety
+			if bottleneck_mass == INF:
+				break
+			
+			# add mass to new isotope
+			for output_isotope in reaction.output_chanel.isotopes:
+				masses[output_isotope.name] += bottleneck_mass * reaction.mass_defect * reaction.input_chanel.probability * reaction.output_chanel.probability * reactions_intensity * delta
+	
+			# add temperature
+			temperature += bottleneck_mass * reaction.energy_gain * reaction.input_chanel.probability * reaction.output_chanel.probability * mass_to_temperature * delta * reactions_intensity
+
+			# subtract mass from input isotope
+			for input_isotope in reaction.input_chanel.isotopes:
+				masses[input_isotope.name] -= bottleneck_mass * reaction.input_chanel.probability * reactions_intensity * delta
+	
 	#set max mass
 	max_temperature = sum_masses()*mass_to_max_temperature
 
 	# update effects
-	sprite.self_modulate = Color.from_hsv(temperature/max_temperature, 1.0, 1.0)
-	particle.color = Color.from_hsv(temperature/max_temperature, 1.0, 1.0)
+	sprite.self_modulate = Color.from_hsv(clamp(temperature/max_temperature, 0.0, 1.0), 1.0, 1.0)
+	particle.color = Color.from_hsv(clamp(temperature/max_temperature, 0.0, 1.0), 1.0, 1.0)
 	if temperature > max_temperature:
 		particle.explosiveness = 1.0
-	light.energy = temperature/max_temperature*16
+	light.energy = temperature/max_temperature
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():

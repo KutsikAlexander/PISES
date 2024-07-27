@@ -11,8 +11,13 @@ var isotope_on_mass_scale: PackedScene = load("res://scenes/UI/isotope_on_mass_s
 @export var temperature_scale: Container
 @export var reactions_temperature_scale: Container
 var reaction_on_temperature_scale: PackedScene = load("res://scenes/UI/reaction_on_temperature_scale.tscn")
+@export var game_over_windows: Container
+@export var reason_label: Label
 
 func _ready() -> void:
+	# hide game over windows
+	game_over_windows.visible = false
+
 	# construct isotope menu
 	for i: int in range(0, star.isotopes.size()):
 		isotope_menu.add_item(star.isotopes[i].name)
@@ -36,9 +41,12 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	# activate new isotope
 	for reaction:Reaction in star.reactions:
-		if star.temperature > reaction.temperature_threshold:
+		if star.temperature > reaction.temperature_threshold or star.sum_masses() > reaction.mass_threshold:
 			for isotope in reaction.output_chanel.isotopes:
-				isotope_menu.set_item_disabled(reaction.output_chanel.isotopes.find(isotope),false)
+				for i in range(0, star.isotopes.size()):
+					if star.isotopes[i] == isotope:
+						isotope_menu.set_item_disabled(i,false)
+						break
 
 	# update labels
 	var mass_text: String = ""
@@ -63,7 +71,7 @@ func _process(delta: float) -> void:
 	temperature_scale.get_node("EmptySpace").size_flags_stretch_ratio = (star.max_temperature-star.temperature)/star.max_temperature
 	temperature_scale.get_node("CurrentTemperature").size_flags_stretch_ratio = star.temperature/star.max_temperature
 	temperature_scale.get_node("CurrentTemperature/Label").text = str(floor(star.temperature)) + " MK"
-	temperature_scale.get_node("CurrentTemperature").self_modulate = Color.from_hsv(star.temperature/star.max_temperature, 1.0, 1.0)
+	temperature_scale.get_node("CurrentTemperature").self_modulate = Color.from_hsv(clamp(star.temperature/star.max_temperature, 0.0, 1.0), 1.0, 1.0)
 
 	#reactions temperature scale
 	var max_obtained_reaction_temperature: float = 0.0
@@ -80,3 +88,14 @@ func _process(delta: float) -> void:
 		if star.reactions[i].temperature_threshold > max_obtained_reaction_temperature:
 			max_obtained_reaction_temperature = star.reactions[i].temperature_threshold
 	reactions_temperature_scale.get_node("EmptySpace").size_flags_stretch_ratio = (star.max_temperature - max_obtained_reaction_temperature)/star.max_temperature
+
+	# check temperature
+	if star.temperature < 0.0:
+		game_over_windows.visible = true
+		reason_label.text = "Your star is burn out"
+	if star.temperature > star.max_temperature:
+		game_over_windows.visible = true
+		reason_label.text = "Your star is explode"
+
+func restart() -> void:
+	get_tree().reload_current_scene()

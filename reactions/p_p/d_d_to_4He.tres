@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="Reaction" load_steps=7 format=3 uid="uid://5ag3elq82p6k"]
+
+[ext_resource type="Script" path="res://scripts/reaction.gd" id="1_5avh6"]
+[ext_resource type="Resource" uid="uid://rgjoo8nf300a" path="res://isotopes/D.tres" id="1_mg68y"]
+[ext_resource type="Script" path="res://scripts/chanel.gd" id="2_e1ke8"]
+[ext_resource type="Resource" uid="uid://b3jgflkgva4ha" path="res://isotopes/4He.tres" id="3_wwetj"]
+
+[sub_resource type="Resource" id="Resource_gfr46"]
+script = ExtResource("2_e1ke8")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("1_mg68y")])
+probability = 1.0
+
+[sub_resource type="Resource" id="Resource_an2xv"]
+script = ExtResource("2_e1ke8")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("3_wwetj")])
+probability = 1.0
+
+[resource]
+script = ExtResource("1_5avh6")
+reaction_name = "d+d=4He"
+description = ""
+mass_threshold = 100.0
+temperature_threshold = 10.0
+input_chanel = SubResource("Resource_gfr46")
+output_chanel = SubResource("Resource_an2xv")
+mass_defect = 0.9
+energy_gain = 2.0

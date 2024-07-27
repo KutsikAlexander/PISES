@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://di86t48oqn1vh"]
+[gd_scene load_steps=47 format=3 uid="uid://di86t48oqn1vh"]
 
 [ext_resource type="Texture2D" uid="uid://c4hbgdfudk0lu" path="res://sprites/webb_nebula.png" id="1_7dvpd"]
 [ext_resource type="Script" path="res://scripts/UI/ui.gd" id="1_32j34"]
@@ -29,22 +29,14 @@
 [ext_resource type="Resource" uid="uid://dqomxk2jn13lp" path="res://reactions/p_p/p_p_to_d.tres" id="25_fgjjj"]
 [ext_resource type="Resource" uid="uid://c8o1vicejej5r" path="res://reactions/helium_fusion/12C+4He_to_16O.tres" id="25_rp3sr"]
 [ext_resource type="Resource" uid="uid://dbmth880m8uuy" path="res://reactions/helium_fusion/16O_4He_to_20Ne.tres" id="26_ar6q6"]
-[ext_resource type="Resource" uid="uid://c83psejdcptpd" path="res://reactions/p_p/p_d_to_3He.tres" id="26_pa77u"]
+[ext_resource type="Resource" uid="uid://5ag3elq82p6k" path="res://reactions/p_p/d_d_to_4He.tres" id="26_k880k"]
 [ext_resource type="Resource" uid="uid://clx6rhgcsnmcp" path="res://reactions/helium_fusion/20Ne_4He_to_24Mg.tres" id="27_vfikf"]
-[ext_resource type="Resource" uid="uid://ce0o3t7wc2ijq" path="res://reactions/p_p/p_p_I_branch.tres" id="27_x6dhr"]
 [ext_resource type="Resource" uid="uid://cwnssh0x0yufk" path="res://reactions/helium_fusion/24Mg_4He_to_28Si.tres" id="28_1r7ba"]
-[ext_resource type="Resource" uid="uid://cf76me0j5qaec" path="res://reactions/p_p/p_p_II_branch.tres" id="28_wnl00"]
-[ext_resource type="Resource" uid="uid://b35u78duudaai" path="res://reactions/CNO-I/12C_p_to_13N.tres" id="29_esa11"]
 [ext_resource type="Resource" uid="uid://ku6w32a4fiyu" path="res://reactions/helium_fusion/28Si_4He_to_32S.tres" id="29_tudtt"]
-[ext_resource type="Resource" uid="uid://sarkq0p4uxq4" path="res://reactions/CNO-I/13N_to_13C.tres" id="30_hn7i1"]
 [ext_resource type="Resource" uid="uid://cvp6okyh132dd" path="res://reactions/helium_fusion/32S_4He_to_36Ar.tres" id="30_v3oi8"]
 [ext_resource type="Resource" uid="uid://caraswv2kqgj1" path="res://reactions/helium_fusion/36Ar_4He_to_40Ca.tres" id="31_7c6fe"]
-[ext_resource type="Resource" uid="uid://dlyk6w5ibroxp" path="res://reactions/CNO-I/13C_p_to_14N.tres" id="31_snjlv"]
-[ext_resource type="Resource" uid="uid://cp2hwxos36v78" path="res://reactions/CNO-I/14N_p_to_15O.tres" id="32_cp4sw"]
 [ext_resource type="Resource" uid="uid://bhswouxrhohno" path="res://reactions/helium_fusion/40Ca_4He_to_44Ti.tres" id="32_fea4c"]
 [ext_resource type="Resource" uid="uid://c5oeqwqe83lsi" path="res://reactions/helium_fusion/44Ti_4He_to_48Cr.tres" id="33_78dqu"]
-[ext_resource type="Resource" uid="uid://b2lae5y8dspc6" path="res://reactions/CNO-I/15O_to_15N.tres" id="33_ifrx7"]
-[ext_resource type="Resource" uid="uid://bp6hsc1vg4lhn" path="res://reactions/CNO-I/15N_p_to_12C_4He.tres" id="34_ekha7"]
 [ext_resource type="Resource" uid="uid://c4kq5yxvf5khs" path="res://reactions/helium_fusion/48Cr_4He_to_52Fe.tres" id="34_x3pkm"]
 [ext_resource type="Resource" uid="uid://ulchafbk8hln" path="res://reactions/helium_fusion/52Fe_4He_to_56Ni.tres" id="35_48wsc"]
 [ext_resource type="Resource" uid="uid://rs41paf3l23h" path="res://reactions/helium_fusion/triple_alpha.tres" id="35_qnhv2"]
@@ -80,7 +72,7 @@ polygon = PackedVector2Array(0, -1, 0, -26, 19, -21, 26, -2, 19, 20, 1, 24)
 
 [node name="Space" type="Node2D"]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("star", "mass_label", "temperature_label", "isotope_menu", "mass_per_click_spin_box", "mass_scale", "temperature_scale", "reactions_temperature_scale")]
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("star", "mass_label", "temperature_label", "isotope_menu", "mass_per_click_spin_box", "mass_scale", "temperature_scale", "reactions_temperature_scale", "game_over_windows", "reason_label")]
 script = ExtResource("1_32j34")
 star = NodePath("../Star")
 mass_label = NodePath("PanelContainer1/MarginContainer/GridContainer/MassLabel")
@@ -90,6 +82,8 @@ mass_per_click_spin_box = NodePath("PanelContainer2/GridContainer/SpinBox")
 mass_scale = NodePath("MassScale/VBoxContainer")
 temperature_scale = NodePath("TemperatureScale/StarTemperature")
 reactions_temperature_scale = NodePath("TemperatureScale/ReactionsTemperature")
+game_over_windows = NodePath("GameOver")
+reason_label = NodePath("GameOver/VBoxContainer/Label2")
 
 [node name="PanelContainer1" type="PanelContainer" parent="CanvasLayer"]
 offset_right = 40.0
@@ -207,6 +201,36 @@ alignment = 2
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="GameOver" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GameOver"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/GameOver/VBoxContainer"]
+layout_mode = 2
+text = "Game Over"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/GameOver/VBoxContainer"]
+layout_mode = 2
+text = "Your star burn out/explode"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="CanvasLayer/GameOver/VBoxContainer"]
+layout_mode = 2
+text = "Restart"
+
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -214,12 +238,10 @@ texture = ExtResource("1_7dvpd")
 
 [node name="Star" type="Node2D" parent="."]
 script = ExtResource("1_s3bkw")
-mass_to_temperature = 200.0
-mass_to_max_temperature = 5.0
+mass_to_max_temperature = 1.0
 temperature_loss = 1.0
-reactions_intensity = 0.001
 isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("4_37iw5"), ExtResource("5_ylyc8"), ExtResource("6_vsque"), ExtResource("7_1478u"), ExtResource("8_msg8r"), ExtResource("9_3quw3"), ExtResource("10_ypfda"), ExtResource("11_36v7e"), ExtResource("12_m5tcm"), ExtResource("13_bdto1"), ExtResource("14_apno4"), ExtResource("15_qoak0"), ExtResource("16_1ow11"), ExtResource("17_molc5"), ExtResource("18_lw24i"), ExtResource("19_bqtcl"), ExtResource("20_d7dr1"), ExtResource("21_iwke8"), ExtResource("22_r0n1e"), ExtResource("23_f2gaf"), ExtResource("24_o72ua")])
-reactions = Array[Resource("res://scripts/reaction.gd")]([ExtResource("25_fgjjj"), ExtResource("26_pa77u"), ExtResource("27_x6dhr"), ExtResource("28_wnl00"), ExtResource("29_esa11"), ExtResource("30_hn7i1"), ExtResource("31_snjlv"), ExtResource("32_cp4sw"), ExtResource("33_ifrx7"), ExtResource("34_ekha7"), ExtResource("35_qnhv2"), ExtResource("25_rp3sr"), ExtResource("26_ar6q6"), ExtResource("27_vfikf"), ExtResource("28_1r7ba"), ExtResource("29_tudtt"), ExtResource("30_v3oi8"), ExtResource("31_7c6fe"), ExtResource("32_fea4c"), ExtResource("33_78dqu"), ExtResource("34_x3pkm"), ExtResource("35_48wsc")])
+reactions = Array[Resource("res://scripts/reaction.gd")]([ExtResource("25_fgjjj"), ExtResource("26_k880k"), ExtResource("35_qnhv2"), ExtResource("25_rp3sr"), ExtResource("26_ar6q6"), ExtResource("27_vfikf"), ExtResource("28_1r7ba"), ExtResource("29_tudtt"), ExtResource("30_v3oi8"), ExtResource("31_7c6fe"), ExtResource("32_fea4c"), ExtResource("33_78dqu"), ExtResource("34_x3pkm"), ExtResource("35_48wsc")])
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="Star"]
 emitting = false
@@ -258,3 +280,4 @@ occluder = SubResource("OccluderPolygon2D_e3r27")
 
 [connection signal="item_selected" from="CanvasLayer/PanelContainer2/GridContainer/OptionButton" to="Star" method="change_isotope"]
 [connection signal="value_changed" from="CanvasLayer/PanelContainer2/GridContainer/SpinBox" to="Star" method="change_mass_per_click"]
+[connection signal="pressed" from="CanvasLayer/GameOver/VBoxContainer/Button" to="CanvasLayer" method="restart"]
