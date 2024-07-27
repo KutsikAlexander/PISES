@@ -1,6 +1,6 @@
 class_name Star
 
-extends Node
+extends Node2D
 
 # general variables
 var masses: Dictionary
@@ -11,8 +11,9 @@ var max_temperature: float = 100.0
 
 # coefficients
 @export var mass_to_temperature: float = 1.0
-@export var mass_to_max_temperature: float = 100
-@export var temperature_loss: float = 0.1
+@export var mass_to_max_temperature: float = 10
+@export var mass_to_radius: float = 1.0
+@export var temperature_loss: float = 1.0
 @export var reactions_intensity: float = 0.1
 
 #isotopes and reactions
@@ -47,31 +48,31 @@ func _process(delta: float) -> void:
 			for input_isotope in reaction.input_chanel.isotopes:
 				if masses[input_isotope.name] >= 0.0 and masses[input_isotope.name] < bottleneck_mass:
 					bottleneck_mass = masses[input_isotope.name]
-			
+
 			# for the safety
 			if bottleneck_mass == INF:
 				break
-			
+
 			# add mass to new isotope
 			for output_isotope in reaction.output_chanel.isotopes:
 				masses[output_isotope.name] += bottleneck_mass * reaction.mass_defect * reaction.input_chanel.probability * reaction.output_chanel.probability * reactions_intensity * delta
-	
+
 			# add temperature
 			temperature += bottleneck_mass * reaction.energy_gain * reaction.input_chanel.probability * reaction.output_chanel.probability * mass_to_temperature * delta * reactions_intensity
 
 			# subtract mass from input isotope
 			for input_isotope in reaction.input_chanel.isotopes:
 				masses[input_isotope.name] -= bottleneck_mass * reaction.input_chanel.probability * reactions_intensity * delta
-	
+
 	#set max mass
 	max_temperature = sum_masses()*mass_to_max_temperature
 
 	# update effects
-	sprite.self_modulate = Color.from_hsv(clamp(temperature/max_temperature, 0.0, 1.0), 1.0, 1.0)
-	particle.color = Color.from_hsv(clamp(temperature/max_temperature, 0.0, 1.0), 1.0, 1.0)
+	modulate = Color.from_hsv(clamp(temperature/max_temperature, 0.0, 1.0), 1.0, 1.0)
 	if temperature > max_temperature:
 		particle.explosiveness = 1.0
 	light.energy = temperature/max_temperature
+	scale = Vector2(1,1) * mass_to_radius * log(sum_masses())
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
@@ -83,8 +84,8 @@ func sum_masses() -> float:
 		sum += masses[isotope.name]
 	return sum
 
-func change_isotope(index: int) -> void:
+func set_current_isotope(index: int) -> void:
 	current_isotope = isotopes[index]
 
-func change_mass_per_click(value: float) -> void:
+func set_mass_per_click(value: float) -> void:
 	mass_per_click = value

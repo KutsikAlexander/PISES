@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="Reaction" load_steps=7 format=3 uid="uid://b5ju5kvap30yl"]
+
+[ext_resource type="Resource" uid="uid://cdruq61hjlyb1" path="res://isotopes/12C.tres" id="1_iw6ci"]
+[ext_resource type="Script" path="res://scripts/chanel.gd" id="2_owrrm"]
+[ext_resource type="Resource" uid="uid://b0apulywvarls" path="res://isotopes/24Mg.tres" id="3_ghpbr"]
+[ext_resource type="Script" path="res://scripts/reaction.gd" id="4_o2whn"]
+
+[sub_resource type="Resource" id="Resource_b3wxv"]
+script = ExtResource("2_owrrm")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("1_iw6ci")])
+probability = 1.0
+
+[sub_resource type="Resource" id="Resource_5dqe3"]
+script = ExtResource("2_owrrm")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("3_ghpbr")])
+probability = 1.0
+
+[resource]
+script = ExtResource("4_o2whn")
+reaction_name = "12C+12C=24Mg"
+description = ""
+mass_threshold = 10000.0
+temperature_threshold = 1000.0
+input_chanel = SubResource("Resource_b3wxv")
+output_chanel = SubResource("Resource_5dqe3")
+mass_defect = 0.9
+energy_gain = 8.0

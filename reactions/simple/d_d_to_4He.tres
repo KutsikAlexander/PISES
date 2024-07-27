@@ -17,7 +17,7 @@ probability = 1.0
 
 [resource]
 script = ExtResource("1_5avh6")
-reaction_name = "d+d=4He"
+reaction_name = "D+D=4He"
 description = ""
 mass_threshold = 100.0
 temperature_threshold = 10.0

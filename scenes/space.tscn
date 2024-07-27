@@ -1,8 +1,11 @@
-[gd_scene load_steps=47 format=3 uid="uid://di86t48oqn1vh"]
+[gd_scene load_steps=44 format=3 uid="uid://di86t48oqn1vh"]
 
 [ext_resource type="Texture2D" uid="uid://c4hbgdfudk0lu" path="res://sprites/webb_nebula.png" id="1_7dvpd"]
 [ext_resource type="Script" path="res://scripts/UI/ui.gd" id="1_32j34"]
 [ext_resource type="Script" path="res://scripts/star.gd" id="1_s3bkw"]
+[ext_resource type="Script" path="res://scripts/UI/mass_scale.gd" id="2_yiskf"]
+[ext_resource type="Script" path="res://scripts/UI/temperature_scale.gd" id="3_gv34b"]
+[ext_resource type="Script" path="res://scripts/UI/reaction_temperature_scale.gd" id="4_4n3nf"]
 [ext_resource type="Resource" uid="uid://bcxjfgxa7n0ft" path="res://isotopes/H.tres" id="4_37iw5"]
 [ext_resource type="Resource" uid="uid://rgjoo8nf300a" path="res://isotopes/D.tres" id="5_ylyc8"]
 [ext_resource type="Resource" uid="uid://cvt2h0i1fu7xs" path="res://isotopes/3He.tres" id="6_vsque"]
@@ -10,7 +13,6 @@
 [ext_resource type="Texture2D" uid="uid://bdedrbo6jotjm" path="res://sprites/circle.svg" id="8_g0cf4"]
 [ext_resource type="Resource" uid="uid://cdruq61hjlyb1" path="res://isotopes/12C.tres" id="8_msg8r"]
 [ext_resource type="Resource" uid="uid://bklllkkjjti3m" path="res://isotopes/13C.tres" id="9_3quw3"]
-[ext_resource type="Script" path="res://scripts/planet.gd" id="9_d0ugd"]
 [ext_resource type="Resource" uid="uid://dbbywyt14hya6" path="res://isotopes/13N.tres" id="10_ypfda"]
 [ext_resource type="Resource" uid="uid://bsxpk4q887q7t" path="res://isotopes/14N.tres" id="11_36v7e"]
 [ext_resource type="Resource" uid="uid://damb17x2gm2bx" path="res://isotopes/15N.tres" id="12_m5tcm"]
@@ -26,20 +28,16 @@
 [ext_resource type="Resource" uid="uid://d3wuqy6gink7a" path="res://isotopes/48Cr.tres" id="22_r0n1e"]
 [ext_resource type="Resource" uid="uid://yfq87ey3m0xa" path="res://isotopes/52Fe.tres" id="23_f2gaf"]
 [ext_resource type="Resource" uid="uid://d0kd2rgi3q4qi" path="res://isotopes/56Ni.tres" id="24_o72ua"]
-[ext_resource type="Resource" uid="uid://dqomxk2jn13lp" path="res://reactions/p_p/p_p_to_d.tres" id="25_fgjjj"]
-[ext_resource type="Resource" uid="uid://c8o1vicejej5r" path="res://reactions/helium_fusion/12C+4He_to_16O.tres" id="25_rp3sr"]
-[ext_resource type="Resource" uid="uid://dbmth880m8uuy" path="res://reactions/helium_fusion/16O_4He_to_20Ne.tres" id="26_ar6q6"]
-[ext_resource type="Resource" uid="uid://5ag3elq82p6k" path="res://reactions/p_p/d_d_to_4He.tres" id="26_k880k"]
-[ext_resource type="Resource" uid="uid://clx6rhgcsnmcp" path="res://reactions/helium_fusion/20Ne_4He_to_24Mg.tres" id="27_vfikf"]
-[ext_resource type="Resource" uid="uid://cwnssh0x0yufk" path="res://reactions/helium_fusion/24Mg_4He_to_28Si.tres" id="28_1r7ba"]
-[ext_resource type="Resource" uid="uid://ku6w32a4fiyu" path="res://reactions/helium_fusion/28Si_4He_to_32S.tres" id="29_tudtt"]
-[ext_resource type="Resource" uid="uid://cvp6okyh132dd" path="res://reactions/helium_fusion/32S_4He_to_36Ar.tres" id="30_v3oi8"]
-[ext_resource type="Resource" uid="uid://caraswv2kqgj1" path="res://reactions/helium_fusion/36Ar_4He_to_40Ca.tres" id="31_7c6fe"]
-[ext_resource type="Resource" uid="uid://bhswouxrhohno" path="res://reactions/helium_fusion/40Ca_4He_to_44Ti.tres" id="32_fea4c"]
-[ext_resource type="Resource" uid="uid://c5oeqwqe83lsi" path="res://reactions/helium_fusion/44Ti_4He_to_48Cr.tres" id="33_78dqu"]
-[ext_resource type="Resource" uid="uid://c4kq5yxvf5khs" path="res://reactions/helium_fusion/48Cr_4He_to_52Fe.tres" id="34_x3pkm"]
-[ext_resource type="Resource" uid="uid://ulchafbk8hln" path="res://reactions/helium_fusion/52Fe_4He_to_56Ni.tres" id="35_48wsc"]
-[ext_resource type="Resource" uid="uid://rs41paf3l23h" path="res://reactions/helium_fusion/triple_alpha.tres" id="35_qnhv2"]
+[ext_resource type="Resource" uid="uid://cx0mc85qb3q07" path="res://reactions/simple/p_p_to_d_simple.tres" id="25_vq7qk"]
+[ext_resource type="Resource" uid="uid://5ag3elq82p6k" path="res://reactions/simple/d_d_to_4He.tres" id="26_k880k"]
+[ext_resource type="Resource" uid="uid://dguadgbvi5hgw" path="res://reactions/simple/triple_alpha_simple.tres" id="27_a61ot"]
+[ext_resource type="Resource" uid="uid://b5ju5kvap30yl" path="res://reactions/simple/12C_12C_to_24Mg.tres" id="28_omti3"]
+[ext_resource type="Resource" uid="uid://bqj7ovjjlcmwd" path="res://reactions/simple/24Mg_24Mg_to_48Cr.tres" id="29_m0buf"]
+[ext_resource type="Resource" uid="uid://dyufyd7r0wnfx" path="res://reactions/simple/48Cr_4He_to_52Fe.tres" id="30_8mgdb"]
+[ext_resource type="Script" path="res://scripts/planet_generator.gd" id="32_6qsuh"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cccyl"]
+font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Gradient" id="Gradient_h3egs"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
@@ -56,6 +54,18 @@ fill_to = Vector2(0.5, 0)
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.99061, 0.00533807), 0.0, 0.0, 0, 0]
 point_count = 2
 
+[sub_resource type="Gradient" id="Gradient_132i5"]
+offsets = PackedFloat32Array(0, 0.44507)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wuhhn"]
+gradient = SubResource("Gradient_132i5")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
 [sub_resource type="Gradient" id="Gradient_vvb1a"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
@@ -67,75 +77,44 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
 
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_e3r27"]
-polygon = PackedVector2Array(0, -1, 0, -26, 19, -21, 26, -2, 19, 20, 1, 24)
-
 [node name="Space" type="Node2D"]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("star", "mass_label", "temperature_label", "isotope_menu", "mass_per_click_spin_box", "mass_scale", "temperature_scale", "reactions_temperature_scale", "game_over_windows", "reason_label")]
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("star", "mass_scale", "temperature_scale", "reaction_temperature_scale", "isotope_menu", "mass_per_click_spin_box", "game_over_windows", "reason_label")]
 script = ExtResource("1_32j34")
 star = NodePath("../Star")
-mass_label = NodePath("PanelContainer1/MarginContainer/GridContainer/MassLabel")
-temperature_label = NodePath("PanelContainer1/MarginContainer/GridContainer/TemperatureLabel")
-isotope_menu = NodePath("PanelContainer2/GridContainer/OptionButton")
-mass_per_click_spin_box = NodePath("PanelContainer2/GridContainer/SpinBox")
-mass_scale = NodePath("MassScale/VBoxContainer")
-temperature_scale = NodePath("TemperatureScale/StarTemperature")
-reactions_temperature_scale = NodePath("TemperatureScale/ReactionsTemperature")
+mass_scale = NodePath("MassScale")
+temperature_scale = NodePath("TemperatureScale")
+reaction_temperature_scale = NodePath("TemperatureScale/VBoxContainer/Scale/ReactionsTemperature")
+isotope_menu = NodePath("ClickPanelContainer/GridContainer/OptionButton")
+mass_per_click_spin_box = NodePath("ClickPanelContainer/GridContainer/SpinBox")
 game_over_windows = NodePath("GameOver")
 reason_label = NodePath("GameOver/VBoxContainer/Label2")
 
-[node name="PanelContainer1" type="PanelContainer" parent="CanvasLayer"]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="ClickPanelContainer" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -104.5
+offset_right = 104.5
+offset_bottom = 58.0
+grow_horizontal = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer1"]
-layout_mode = 2
-
-[node name="GridContainer" type="GridContainer" parent="CanvasLayer/PanelContainer1/MarginContainer"]
-layout_mode = 2
-columns = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer1/MarginContainer/GridContainer"]
-layout_mode = 2
-text = "Mass:"
-
-[node name="MassLabel" type="Label" parent="CanvasLayer/PanelContainer1/MarginContainer/GridContainer"]
-layout_mode = 2
-text = "0"
-
-[node name="Label3" type="Label" parent="CanvasLayer/PanelContainer1/MarginContainer/GridContainer"]
-layout_mode = 2
-text = "Temperature:"
-
-[node name="TemperatureLabel" type="Label" parent="CanvasLayer/PanelContainer1/MarginContainer/GridContainer"]
-layout_mode = 2
-text = "0"
-
-[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -120.0
-offset_bottom = 50.0
-grow_horizontal = 0
-
-[node name="GridContainer" type="GridContainer" parent="CanvasLayer/PanelContainer2"]
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/ClickPanelContainer"]
 layout_mode = 2
 columns = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer2/GridContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/ClickPanelContainer/GridContainer"]
 layout_mode = 2
 text = "Current Isotope"
 
-[node name="OptionButton" type="OptionButton" parent="CanvasLayer/PanelContainer2/GridContainer"]
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer/ClickPanelContainer/GridContainer"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="CanvasLayer/PanelContainer2/GridContainer"]
+[node name="Label2" type="Label" parent="CanvasLayer/ClickPanelContainer/GridContainer"]
 layout_mode = 2
 text = "Add by click"
 
-[node name="SpinBox" type="SpinBox" parent="CanvasLayer/PanelContainer2/GridContainer"]
+[node name="SpinBox" type="SpinBox" parent="CanvasLayer/ClickPanelContainer/GridContainer"]
 layout_mode = 2
 min_value = 1.0
 value = 1.0
@@ -150,9 +129,20 @@ anchor_bottom = 1.0
 offset_top = -522.0
 offset_right = 131.0
 grow_vertical = 0
+script = ExtResource("2_yiskf")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MassScale"]
 layout_mode = 2
+
+[node name="MassLabel" type="Label" parent="CanvasLayer/MassScale/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MassScale/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 alignment = 2
 
 [node name="TemperatureScale" type="PanelContainer" parent="CanvasLayer"]
@@ -165,20 +155,34 @@ offset_left = -141.0
 offset_top = -534.0
 grow_horizontal = 0
 grow_vertical = 0
+script = ExtResource("3_gv34b")
 
-[node name="StarTemperature" type="VBoxContainer" parent="CanvasLayer/TemperatureScale"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/TemperatureScale"]
+layout_mode = 2
+
+[node name="MaxTemperatureLabel" type="Label" parent="CanvasLayer/TemperatureScale/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Scale" type="PanelContainer" parent="CanvasLayer/TemperatureScale/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StarTemperature" type="VBoxContainer" parent="CanvasLayer/TemperatureScale/VBoxContainer/Scale"]
 layout_mode = 2
 alignment = 2
 
-[node name="EmptySpace" type="Control" parent="CanvasLayer/TemperatureScale/StarTemperature"]
+[node name="EmptySpace" type="Control" parent="CanvasLayer/TemperatureScale/VBoxContainer/Scale/StarTemperature"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CurrentTemperature" type="ColorRect" parent="CanvasLayer/TemperatureScale/StarTemperature"]
+[node name="CurrentTemperature" type="ColorRect" parent="CanvasLayer/TemperatureScale/VBoxContainer/Scale/StarTemperature"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="CanvasLayer/TemperatureScale/StarTemperature/CurrentTemperature"]
+[node name="Label" type="Label" parent="CanvasLayer/TemperatureScale/VBoxContainer/Scale/StarTemperature/CurrentTemperature"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -193,13 +197,22 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Current Temperature"
 
-[node name="ReactionsTemperature" type="VBoxContainer" parent="CanvasLayer/TemperatureScale"]
+[node name="ReactionsTemperature" type="VBoxContainer" parent="CanvasLayer/TemperatureScale/VBoxContainer/Scale"]
 layout_mode = 2
 alignment = 2
+script = ExtResource("4_4n3nf")
 
-[node name="EmptySpace" type="Control" parent="CanvasLayer/TemperatureScale/ReactionsTemperature"]
+[node name="EmptySpace" type="PanelContainer" parent="CanvasLayer/TemperatureScale/VBoxContainer/Scale/ReactionsTemperature"]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/TemperatureScale/VBoxContainer/Scale/ReactionsTemperature/EmptySpace"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/TemperatureScale/VBoxContainer/Scale/ReactionsTemperature/EmptySpace"]
+layout_mode = 2
+text = "000"
+label_settings = SubResource("LabelSettings_cccyl")
 
 [node name="GameOver" type="PanelContainer" parent="CanvasLayer"]
 anchors_preset = 8
@@ -238,10 +251,8 @@ texture = ExtResource("1_7dvpd")
 
 [node name="Star" type="Node2D" parent="."]
 script = ExtResource("1_s3bkw")
-mass_to_max_temperature = 1.0
-temperature_loss = 1.0
 isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("4_37iw5"), ExtResource("5_ylyc8"), ExtResource("6_vsque"), ExtResource("7_1478u"), ExtResource("8_msg8r"), ExtResource("9_3quw3"), ExtResource("10_ypfda"), ExtResource("11_36v7e"), ExtResource("12_m5tcm"), ExtResource("13_bdto1"), ExtResource("14_apno4"), ExtResource("15_qoak0"), ExtResource("16_1ow11"), ExtResource("17_molc5"), ExtResource("18_lw24i"), ExtResource("19_bqtcl"), ExtResource("20_d7dr1"), ExtResource("21_iwke8"), ExtResource("22_r0n1e"), ExtResource("23_f2gaf"), ExtResource("24_o72ua")])
-reactions = Array[Resource("res://scripts/reaction.gd")]([ExtResource("25_fgjjj"), ExtResource("26_k880k"), ExtResource("35_qnhv2"), ExtResource("25_rp3sr"), ExtResource("26_ar6q6"), ExtResource("27_vfikf"), ExtResource("28_1r7ba"), ExtResource("29_tudtt"), ExtResource("30_v3oi8"), ExtResource("31_7c6fe"), ExtResource("32_fea4c"), ExtResource("33_78dqu"), ExtResource("34_x3pkm"), ExtResource("35_48wsc")])
+reactions = Array[Resource("res://scripts/reaction.gd")]([ExtResource("25_vq7qk"), ExtResource("26_k880k"), ExtResource("27_a61ot"), ExtResource("28_omti3"), ExtResource("29_m0buf"), ExtResource("30_8mgdb")])
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="Star"]
 emitting = false
@@ -262,22 +273,21 @@ scale_amount_curve = SubResource("Curve_wwjd4")
 [node name="Sprite2D" type="Sprite2D" parent="Star"]
 texture = ExtResource("8_g0cf4")
 
+[node name="Sprite2D2" type="Sprite2D" parent="Star/Sprite2D"]
+texture = SubResource("GradientTexture2D_wuhhn")
+
 [node name="PointLight2D" type="PointLight2D" parent="Star"]
 enabled = false
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_7eva8")
 
-[node name="Planet" type="Node2D" parent="Star"]
-script = ExtResource("9_d0ugd")
+[node name="PlanetGenerator" type="Node2D" parent="."]
+script = ExtResource("32_6qsuh")
+number_of_planets = 3
+orbit_radius_gap = 150.0
+orbit_radius_fluctuation = 10.0
+max_speed = 3.0
 
-[node name="Sprite2D" type="Sprite2D" parent="Star/Planet"]
-position = Vector2(300, 0)
-texture = ExtResource("8_g0cf4")
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="Star/Planet"]
-position = Vector2(300, 0)
-occluder = SubResource("OccluderPolygon2D_e3r27")
-
-[connection signal="item_selected" from="CanvasLayer/PanelContainer2/GridContainer/OptionButton" to="Star" method="change_isotope"]
-[connection signal="value_changed" from="CanvasLayer/PanelContainer2/GridContainer/SpinBox" to="Star" method="change_mass_per_click"]
+[connection signal="item_selected" from="CanvasLayer/ClickPanelContainer/GridContainer/OptionButton" to="Star" method="set_current_isotope"]
+[connection signal="value_changed" from="CanvasLayer/ClickPanelContainer/GridContainer/SpinBox" to="Star" method="set_mass_per_click"]
 [connection signal="pressed" from="CanvasLayer/GameOver/VBoxContainer/Button" to="CanvasLayer" method="restart"]

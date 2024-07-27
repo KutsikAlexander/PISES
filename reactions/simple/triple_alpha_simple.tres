@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="Reaction" load_steps=7 format=3 uid="uid://dguadgbvi5hgw"]
+
+[ext_resource type="Resource" uid="uid://b3jgflkgva4ha" path="res://isotopes/4He.tres" id="1_k72ga"]
+[ext_resource type="Script" path="res://scripts/chanel.gd" id="2_ukd0n"]
+[ext_resource type="Resource" uid="uid://cdruq61hjlyb1" path="res://isotopes/12C.tres" id="3_ytdrg"]
+[ext_resource type="Script" path="res://scripts/reaction.gd" id="4_6f285"]
+
+[sub_resource type="Resource" id="Resource_a1a26"]
+script = ExtResource("2_ukd0n")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("1_k72ga")])
+probability = 1.0
+
+[sub_resource type="Resource" id="Resource_4vaqr"]
+script = ExtResource("2_ukd0n")
+isotopes = Array[Resource("res://scripts/isotope.gd")]([ExtResource("3_ytdrg")])
+probability = 1.0
+
+[resource]
+script = ExtResource("4_6f285")
+reaction_name = "Triple Alpha"
+description = "4He+4He+4He=12C"
+mass_threshold = 1000.0
+temperature_threshold = 100.0
+input_chanel = SubResource("Resource_a1a26")
+output_chanel = SubResource("Resource_4vaqr")
+mass_defect = 0.9
+energy_gain = 4.0
