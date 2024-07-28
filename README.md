@@ -105,7 +105,7 @@ Player can obtain achievement for:
 
 - [Stellar/nebula background](https://www.nasa.gov/image-galleries/). Became less visible (darker) due to the star's light intensity.
 - Main star is a simple circle/sphere which changes color based on chemical compounds and/or temperature. Star's texture is generated via [Perlin Noise](https://en.wikipedia.org/wiki/Perlin_noise) or shaders.
-- There are few planets around the star. Players can see planets' shadows.
+- There are few planets around the star. Players can see planets' shadows. Use [Pixel Planet Generator](https://deep-fold.itch.io/pixel-planet-generator) for the sprites.
 
 # Audio
 ## Music

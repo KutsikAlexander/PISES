@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://di86t48oqn1vh"]
+[gd_scene load_steps=48 format=3 uid="uid://di86t48oqn1vh"]
 
 [ext_resource type="Texture2D" uid="uid://c4hbgdfudk0lu" path="res://sprites/webb_nebula.png" id="1_7dvpd"]
 [ext_resource type="Script" path="res://scripts/UI/ui.gd" id="1_32j34"]
@@ -36,6 +36,7 @@
 [ext_resource type="Resource" uid="uid://bqj7ovjjlcmwd" path="res://reactions/simple/24Mg_24Mg_to_48Cr.tres" id="29_m0buf"]
 [ext_resource type="Resource" uid="uid://dyufyd7r0wnfx" path="res://reactions/simple/48Cr_4He_to_52Fe.tres" id="30_8mgdb"]
 [ext_resource type="Script" path="res://scripts/planet_generator.gd" id="32_6qsuh"]
+[ext_resource type="Shader" path="res://shaders/star.gdshader" id="35_d3v1x"]
 
 [sub_resource type="Gradient" id="Gradient_h3egs"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
@@ -51,6 +52,18 @@ fill_to = Vector2(0.5, 0)
 [sub_resource type="Curve" id="Curve_wwjd4"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.99061, 0.00533807), 0.0, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bctmk"]
+noise_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_nyywn"]
+seamless = true
+noise = SubResource("FastNoiseLite_bctmk")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4vt76"]
+shader = ExtResource("35_d3v1x")
+shader_parameter/speed = 0.1
+shader_parameter/noise = SubResource("NoiseTexture2D_nyywn")
 
 [sub_resource type="Gradient" id="Gradient_132i5"]
 offsets = PackedFloat32Array(0, 0.44507)
@@ -261,6 +274,7 @@ scale_amount_max = 5.0
 scale_amount_curve = SubResource("Curve_wwjd4")
 
 [node name="Sprite2D" type="Sprite2D" parent="Star"]
+material = SubResource("ShaderMaterial_4vt76")
 texture = ExtResource("8_g0cf4")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Star/Sprite2D"]
@@ -273,10 +287,11 @@ texture = SubResource("GradientTexture2D_7eva8")
 
 [node name="PlanetGenerator" type="Node2D" parent="."]
 script = ExtResource("32_6qsuh")
-number_of_planets = 3
-orbit_radius_gap = 150.0
-orbit_radius_fluctuation = 10.0
+number_of_planets = 2
+orbit_radius_gap = 200.0
+orbit_radius_fluctuation = 50.0
 max_speed = 3.0
+max_scale = 0.5
 
 [connection signal="item_selected" from="CanvasLayer/IsotopeMenu/GridContainer/OptionButton" to="Star" method="set_current_isotope"]
 [connection signal="value_changed" from="CanvasLayer/IsotopeMenu/GridContainer/SpinBox" to="Star" method="set_mass_per_click"]
