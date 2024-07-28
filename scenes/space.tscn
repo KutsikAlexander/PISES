@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://c4hbgdfudk0lu" path="res://sprites/webb_nebula.png" id="1_7dvpd"]
 [ext_resource type="Script" path="res://scripts/UI/ui.gd" id="1_32j34"]
 [ext_resource type="Script" path="res://scripts/star.gd" id="1_s3bkw"]
+[ext_resource type="Script" path="res://scripts/UI/isotope_menu.gd" id="2_25b5o"]
 [ext_resource type="Script" path="res://scripts/UI/mass_scale.gd" id="2_yiskf"]
 [ext_resource type="Script" path="res://scripts/UI/temperature_scale.gd" id="3_gv34b"]
 [ext_resource type="Script" path="res://scripts/UI/reaction_temperature_scale.gd" id="4_4n3nf"]
@@ -35,9 +36,6 @@
 [ext_resource type="Resource" uid="uid://bqj7ovjjlcmwd" path="res://reactions/simple/24Mg_24Mg_to_48Cr.tres" id="29_m0buf"]
 [ext_resource type="Resource" uid="uid://dyufyd7r0wnfx" path="res://reactions/simple/48Cr_4He_to_52Fe.tres" id="30_8mgdb"]
 [ext_resource type="Script" path="res://scripts/planet_generator.gd" id="32_6qsuh"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_cccyl"]
-font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Gradient" id="Gradient_h3egs"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
@@ -79,18 +77,17 @@ fill_to = Vector2(0.5, 0)
 
 [node name="Space" type="Node2D"]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("star", "mass_scale", "temperature_scale", "reaction_temperature_scale", "isotope_menu", "mass_per_click_spin_box", "game_over_windows", "reason_label")]
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("star", "mass_scale", "temperature_scale", "reaction_temperature_scale", "isotope_menu", "game_over_windows", "reason_label")]
 script = ExtResource("1_32j34")
 star = NodePath("../Star")
 mass_scale = NodePath("MassScale")
 temperature_scale = NodePath("TemperatureScale")
 reaction_temperature_scale = NodePath("TemperatureScale/VBoxContainer/Scale/ReactionsTemperature")
-isotope_menu = NodePath("ClickPanelContainer/GridContainer/OptionButton")
-mass_per_click_spin_box = NodePath("ClickPanelContainer/GridContainer/SpinBox")
+isotope_menu = NodePath("IsotopeMenu")
 game_over_windows = NodePath("GameOver")
 reason_label = NodePath("GameOver/VBoxContainer/Label2")
 
-[node name="ClickPanelContainer" type="PanelContainer" parent="CanvasLayer"]
+[node name="IsotopeMenu" type="PanelContainer" parent="CanvasLayer"]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -98,23 +95,24 @@ offset_left = -104.5
 offset_right = 104.5
 offset_bottom = 58.0
 grow_horizontal = 2
+script = ExtResource("2_25b5o")
 
-[node name="GridContainer" type="GridContainer" parent="CanvasLayer/ClickPanelContainer"]
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/IsotopeMenu"]
 layout_mode = 2
 columns = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/ClickPanelContainer/GridContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/IsotopeMenu/GridContainer"]
 layout_mode = 2
 text = "Current Isotope"
 
-[node name="OptionButton" type="OptionButton" parent="CanvasLayer/ClickPanelContainer/GridContainer"]
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer/IsotopeMenu/GridContainer"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="CanvasLayer/ClickPanelContainer/GridContainer"]
+[node name="Label2" type="Label" parent="CanvasLayer/IsotopeMenu/GridContainer"]
 layout_mode = 2
 text = "Add by click"
 
-[node name="SpinBox" type="SpinBox" parent="CanvasLayer/ClickPanelContainer/GridContainer"]
+[node name="SpinBox" type="SpinBox" parent="CanvasLayer/IsotopeMenu/GridContainer"]
 layout_mode = 2
 min_value = 1.0
 value = 1.0
@@ -202,17 +200,9 @@ layout_mode = 2
 alignment = 2
 script = ExtResource("4_4n3nf")
 
-[node name="EmptySpace" type="PanelContainer" parent="CanvasLayer/TemperatureScale/VBoxContainer/Scale/ReactionsTemperature"]
+[node name="EmptySpace" type="Control" parent="CanvasLayer/TemperatureScale/VBoxContainer/Scale/ReactionsTemperature"]
 layout_mode = 2
 size_flags_vertical = 3
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/TemperatureScale/VBoxContainer/Scale/ReactionsTemperature/EmptySpace"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/TemperatureScale/VBoxContainer/Scale/ReactionsTemperature/EmptySpace"]
-layout_mode = 2
-text = "000"
-label_settings = SubResource("LabelSettings_cccyl")
 
 [node name="GameOver" type="PanelContainer" parent="CanvasLayer"]
 anchors_preset = 8
@@ -237,7 +227,7 @@ horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="CanvasLayer/GameOver/VBoxContainer"]
 layout_mode = 2
-text = "Your star burn out/explode"
+text = "Your star burns out/explodes"
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="CanvasLayer/GameOver/VBoxContainer"]
@@ -246,7 +236,7 @@ text = "Restart"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Background" type="Sprite2D" parent="."]
 texture = ExtResource("1_7dvpd")
 
 [node name="Star" type="Node2D" parent="."]
@@ -288,6 +278,8 @@ orbit_radius_gap = 150.0
 orbit_radius_fluctuation = 10.0
 max_speed = 3.0
 
-[connection signal="item_selected" from="CanvasLayer/ClickPanelContainer/GridContainer/OptionButton" to="Star" method="set_current_isotope"]
-[connection signal="value_changed" from="CanvasLayer/ClickPanelContainer/GridContainer/SpinBox" to="Star" method="set_mass_per_click"]
+[connection signal="item_selected" from="CanvasLayer/IsotopeMenu/GridContainer/OptionButton" to="Star" method="set_current_isotope"]
+[connection signal="value_changed" from="CanvasLayer/IsotopeMenu/GridContainer/SpinBox" to="Star" method="set_mass_per_click"]
 [connection signal="pressed" from="CanvasLayer/GameOver/VBoxContainer/Button" to="CanvasLayer" method="restart"]
+[connection signal="burn_out" from="Star" to="CanvasLayer" method="game_over"]
+[connection signal="discover_new_isotope" from="Star" to="CanvasLayer/IsotopeMenu" method="activate_isotope"]

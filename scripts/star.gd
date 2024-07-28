@@ -8,6 +8,7 @@ var current_isotope: Isotope
 var mass_per_click: float = 1.0
 var temperature: float = 0.0
 var max_temperature: float = 100.0
+var discovered_isotopes: Dictionary
 
 # coefficients
 @export var mass_to_temperature: float = 1.0
@@ -25,22 +26,20 @@ var max_temperature: float = 100.0
 @onready var particle: CPUParticles2D = $CPUParticles2D
 @onready var light: PointLight2D = $PointLight2D
 
+# signals
+signal burn_out(reason: String)
+signal discover_new_isotope(isotope: Isotope)
+
 func _ready() -> void:
 	for isotope in isotopes:
 		masses[isotope.name] = 0.0
-	masses[isotopes[0].name] = 5.0
+		discovered_isotopes[isotope.name] = false
 
+	masses[isotopes[0].name] = 5.0
+	discovered_isotopes[isotopes[0].name] = true
 	current_isotope = isotopes[0]
 
 func _process(delta: float) -> void:
-	if temperature > 0.0:
-		temperature -= temperature_loss * delta
-		particle.emitting = true
-		light.enabled =true
-	else:
-		particle.emitting = false
-		light.enabled =false
-
 	for reaction:Reaction in reactions:
 		if temperature > reaction.temperature_threshold or sum_masses() > reaction.mass_threshold:
 			# find bottleneck
@@ -64,15 +63,41 @@ func _process(delta: float) -> void:
 			for input_isotope in reaction.input_chanel.isotopes:
 				masses[input_isotope.name] -= bottleneck_mass * reaction.input_chanel.probability * reactions_intensity * delta
 
+			# check if isotope is discovered
+			for output_isotope in reaction.output_chanel.isotopes:
+				if discovered_isotopes[output_isotope.name] == false:
+					discovered_isotopes[output_isotope.name] = true
+					discover_new_isotope.emit(output_isotope)
+
 	#set max mass
 	max_temperature = sum_masses()*mass_to_max_temperature
 
 	# update effects
 	modulate = Color.from_hsv(clamp(temperature/max_temperature, 0.0, 1.0), 1.0, 1.0)
-	if temperature > max_temperature:
-		particle.explosiveness = 1.0
 	light.energy = temperature/max_temperature
 	scale = Vector2(1,1) * mass_to_radius * log(sum_masses())
+
+	# check temperature
+	if temperature < 0.0:
+		burn_out.emit("Temperature is too low. Your star burns out.")
+		particle.emitting = false
+		light.enabled =false
+		set_process(false)
+		set_process_unhandled_input(false)
+	elif temperature > max_temperature:
+		burn_out.emit("Temperature is too high. Your star explodes.")
+		particle.one_shot = true
+		particle.explosiveness = 1.0
+		light.enabled =false
+		set_process(false)
+		set_process_unhandled_input(false)
+	elif temperature == 0.0:
+		# skip for start
+		pass
+	else:
+		temperature -= temperature_loss * delta
+		particle.emitting = true
+		light.enabled =true
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
