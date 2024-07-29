@@ -110,12 +110,12 @@ Player can obtain achievement for:
 # Audio
 ## Music
 
-Some ambient interstellar music.
+[Another space background track](https://opengameart.org/content/another-space-background-track)
 
 ## Sound effects
 
-- Sound of burning.
-- Sound for clicks on UI.
+- [Sound of burning](https://opengameart.org/content/synthesized-fire-sound-effect)
+- Sound for clicks on UI
 
 # Game Experience
 ## UI
@@ -147,3 +147,4 @@ Click the left mouse button to add the chosen element.
 - [ ] The star can change color
 - [ ] Add planets. Planets cast shadow
 - [ ] Achievements
+- [ ] Accessability

@@ -17,9 +17,12 @@ var discovered_isotopes: Dictionary
 @export var temperature_loss: float = 1.0
 @export var reactions_intensity: float = 0.1
 
-#isotopes and reactions
+# isotopes and reactions
 @export var isotopes: Array[Isotope]
 @export var reactions: Array[Reaction]
+
+# sounds
+@onready var sound: AudioStreamPlayer = $AudioStreamPlayer
 
 # child nodes
 @onready var sprite: Sprite2D = $Sprite2D
@@ -73,17 +76,18 @@ func _process(delta: float) -> void:
 	max_temperature = sum_masses()*mass_to_max_temperature
 
 	# update effects
-	modulate = Color.from_hsv(clamp(temperature/max_temperature, 0.0, 1.0), 1.0, 1.0)
 	light.energy = temperature/max_temperature
 	scale = Vector2(1,1) * mass_to_radius * log(sum_masses())
 
 	# check temperature
 	if temperature < 0.0:
 		burn_out.emit("Temperature is too low. Your star burns out.")
+		modulate = Color.BROWN
 		particle.emitting = false
 		light.enabled =false
 		set_process(false)
 		set_process_unhandled_input(false)
+		sound.playing = false
 	elif temperature > max_temperature:
 		burn_out.emit("Temperature is too high. Your star explodes.")
 		particle.one_shot = true
@@ -96,8 +100,11 @@ func _process(delta: float) -> void:
 		pass
 	else:
 		temperature -= temperature_loss * delta
+		modulate = Color.from_hsv(clamp(temperature/max_temperature, 0.0, 1.0), 1.0, 1.0)
 		particle.emitting = true
-		light.enabled =true
+		light.enabled = true
+		if not sound.playing:
+			sound.playing = true
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():

@@ -7,11 +7,11 @@ extends Node
 @export var temperature_scale: TemperatureScale
 @export var reaction_temperature_scale: ReactionTemperatureScale
 @export var isotope_menu: IsotopeMenu
+@export var settings_menu: Control
 @export var game_over_windows: Container
 @export var reason_label: Label
 
 func _ready() -> void:
-	game_over_windows.visible = false # hide game over windows
 	isotope_menu.set_isotopes(star.isotopes) # construct isotope menu
 	mass_scale.set_isotopes_and_masses(star.isotopes, star.masses) # construct isotope mass scale
 	reaction_temperature_scale.set_reactions(star.reactions) # construct reaction temperature scale
@@ -26,3 +26,6 @@ func game_over(reason: String = "No reason") -> void:
 
 func restart() -> void:
 	get_tree().reload_current_scene()
+
+func open_settings() -> void:
+		settings_menu.visible = !settings_menu.visible

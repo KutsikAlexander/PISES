@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://di86t48oqn1vh"]
+[gd_scene load_steps=50 format=3 uid="uid://di86t48oqn1vh"]
 
 [ext_resource type="Texture2D" uid="uid://c4hbgdfudk0lu" path="res://sprites/webb_nebula.png" id="1_7dvpd"]
 [ext_resource type="Script" path="res://scripts/UI/ui.gd" id="1_32j34"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://scripts/UI/reaction_temperature_scale.gd" id="4_4n3nf"]
 [ext_resource type="Resource" uid="uid://bcxjfgxa7n0ft" path="res://isotopes/H.tres" id="4_37iw5"]
 [ext_resource type="Resource" uid="uid://rgjoo8nf300a" path="res://isotopes/D.tres" id="5_ylyc8"]
+[ext_resource type="PackedScene" uid="uid://coim046jpn3ip" path="res://scenes/UI/settings.tscn" id="6_reiiu"]
 [ext_resource type="Resource" uid="uid://cvt2h0i1fu7xs" path="res://isotopes/3He.tres" id="6_vsque"]
 [ext_resource type="Resource" uid="uid://b3jgflkgva4ha" path="res://isotopes/4He.tres" id="7_1478u"]
 [ext_resource type="Texture2D" uid="uid://bdedrbo6jotjm" path="res://sprites/circle.svg" id="8_g0cf4"]
@@ -37,6 +38,7 @@
 [ext_resource type="Resource" uid="uid://dyufyd7r0wnfx" path="res://reactions/simple/48Cr_4He_to_52Fe.tres" id="30_8mgdb"]
 [ext_resource type="Script" path="res://scripts/planet_generator.gd" id="32_6qsuh"]
 [ext_resource type="Shader" path="res://shaders/star.gdshader" id="35_d3v1x"]
+[ext_resource type="AudioStream" uid="uid://ds8u7otfrx08y" path="res://sounds/fire_sound_effect_cliped_and_looped.mp3" id="38_8jv1n"]
 
 [sub_resource type="Gradient" id="Gradient_h3egs"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
@@ -90,13 +92,14 @@ fill_to = Vector2(0.5, 0)
 
 [node name="Space" type="Node2D"]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("star", "mass_scale", "temperature_scale", "reaction_temperature_scale", "isotope_menu", "game_over_windows", "reason_label")]
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("star", "mass_scale", "temperature_scale", "reaction_temperature_scale", "isotope_menu", "settings_menu", "game_over_windows", "reason_label")]
 script = ExtResource("1_32j34")
 star = NodePath("../Star")
 mass_scale = NodePath("MassScale")
 temperature_scale = NodePath("TemperatureScale")
 reaction_temperature_scale = NodePath("TemperatureScale/VBoxContainer/Scale/ReactionsTemperature")
 isotope_menu = NodePath("IsotopeMenu")
+settings_menu = NodePath("SettingsPanel")
 game_over_windows = NodePath("GameOver")
 reason_label = NodePath("GameOver/VBoxContainer/Label2")
 
@@ -218,6 +221,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="GameOver" type="PanelContainer" parent="CanvasLayer"]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -246,6 +250,18 @@ horizontal_alignment = 1
 [node name="Button" type="Button" parent="CanvasLayer/GameOver/VBoxContainer"]
 layout_mode = 2
 text = "Restart"
+
+[node name="SettingsPanel" parent="CanvasLayer" instance=ExtResource("6_reiiu")]
+visible = false
+offset_left = -107.0
+offset_top = -105.0
+offset_right = 107.0
+offset_bottom = 105.0
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Settings"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -285,6 +301,10 @@ enabled = false
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_7eva8")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Star"]
+stream = ExtResource("38_8jv1n")
+bus = &"SFX"
+
 [node name="PlanetGenerator" type="Node2D" parent="."]
 script = ExtResource("32_6qsuh")
 number_of_planets = 2
@@ -296,5 +316,6 @@ max_scale = 0.5
 [connection signal="item_selected" from="CanvasLayer/IsotopeMenu/GridContainer/OptionButton" to="Star" method="set_current_isotope"]
 [connection signal="value_changed" from="CanvasLayer/IsotopeMenu/GridContainer/SpinBox" to="Star" method="set_mass_per_click"]
 [connection signal="pressed" from="CanvasLayer/GameOver/VBoxContainer/Button" to="CanvasLayer" method="restart"]
+[connection signal="pressed" from="CanvasLayer/Button" to="CanvasLayer" method="open_settings"]
 [connection signal="burn_out" from="Star" to="CanvasLayer" method="game_over"]
 [connection signal="discover_new_isotope" from="Star" to="CanvasLayer/IsotopeMenu" method="activate_isotope"]
